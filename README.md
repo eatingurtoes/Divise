@@ -4,7 +4,7 @@
 
 ## Tethered Downgrades
 
-Either download a deb from the releases tab or add my repo "MatthewPierson.github.io" and install it from there
+Either download a deb from the releases tab or add my [repo](matthewpierson.github.io) and install it from there
 
 This fork is purely for tethered downgrades! This is likely very unstable, probably won't work and might damage your device. It will probably be fine but be warned. 
 
