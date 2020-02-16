@@ -33,7 +33,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return 11;
 }
 
 
@@ -117,6 +117,17 @@
             break;
         }
         case 9: {
+            cell.textLabel.text = @"\"Hacktivate\" device after restore (delete Setup.app and move activation records to /var/mobile/Media/activation_records.plist) [Coming soon]";
+            cell.textLabel.numberOfLines = 0;
+            [cell.textLabel sizeToFit];
+            UISwitch *deleteDuringSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            cell.accessoryView = deleteDuringSwitch;
+            [deleteDuringSwitch setOn:[[_successionPrefs objectForKey:@"hacktivation"] boolValue] animated:NO];
+            [deleteDuringSwitch addTarget:self action:@selector(hacktivationSwitchChanged) forControlEvents:UIControlEventValueChanged];
+            
+            break;
+        }
+        case 10: {
             cell.textLabel.text = [NSString stringWithFormat:@"Succession version %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
             cell.textLabel.numberOfLines = 0;
             [cell.textLabel sizeToFit];
@@ -201,6 +212,18 @@
         [_successionPrefs writeToFile:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" atomically:TRUE];
     } else {
         [_successionPrefs setObject:@(0) forKey:@"dry-run"];
+        [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" error:nil];
+        [_successionPrefs writeToFile:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" atomically:TRUE];
+    }
+}
+
+-(void)hacktivationSwitchChanged{
+    if ([[_successionPrefs objectForKey:@"hacktivation"] isEqual:@(0)]) {
+        [_successionPrefs setObject:@(1) forKey:@"hacktivation"];
+        [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" error:nil];
+        [_successionPrefs writeToFile:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" atomically:TRUE];
+    } else {
+        [_successionPrefs setObject:@(0) forKey:@"hacktivation"];
         [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" error:nil];
         [_successionPrefs writeToFile:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist" atomically:TRUE];
     }

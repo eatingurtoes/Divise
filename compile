@@ -1,37 +1,40 @@
-#!/bin/bash
-
-echo "COMPILING 32-BIT..."
-xcodebuild -target SuccessionRestore -xcconfig compile32.xcconfig -configuration Debug >> /dev/null
-mv ./Build/Debug-iphoneos/SuccessionRestore.app/SuccessionRestore ./SuccessionRestore32
-rm -rf ./Build
-rm -rf ./Index
-
-echo "COMPILING 64-BIT..."
-xcodebuild -target SuccessionRestore -xcconfig compile64.xcconfig -configuration Debug >> /dev/null
-mv ./Build/Debug-iphoneos/SuccessionRestore.app ./
-mv ./SuccessionRestore32 ./SuccessionRestore.app/SuccessionRestore32
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/SuccessionRestore
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/SuccessionRestore32
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/SuccessionHelper
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/attach
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/hdik-armv7
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/hdik-arm64
-ldid -SSuccessionEntitlements.plist ./SuccessionRestore.app/hdik-arm64e
-rm -f ./SuccessionRestore.app/embedded.mobileprovision
-mkdir ./com.samgisaninja.SuccessionRestore
-cp -r ./Template/* ./com.samgisaninja.SuccessionRestore/
-mkdir com.samgisaninja.SuccessionRestore/Applications/
-mv SuccessionRestore.app com.samgisaninja.SuccessionRestore/Applications/
-sudo fakeroot chmod 6755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/SuccessionRestore
-sudo fakeroot chmod 6755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/SuccessionRestore32
-sudo fakeroot chmod 0755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/SuccessionHelper
-sudo fakeroot chmod 0755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/attach
-sudo fakeroot chmod 0755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/hdik-armv7
-sudo fakeroot chmod 0755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/hdik-arm64
-sudo fakeroot chmod 0755 com.samgisaninja.SuccessionRestore/Applications/SuccessionRestore.app/hdik-arm64e
-rm -rf ./Build
+echo "COMPILING..."
+rm -rf ./SuccessionDown.app
+rm -rf ./Build/Release-iphoneos/SuccessionDown.app
+rm -rf ./com.moski.SuccessionDown
+xcodebuild -target SuccessionDown -xcconfig compile64.xcconfig -configuration Release >> /dev/null
+mv ./Build/Release-iphoneos/SuccessionDown.app ./SuccessionDown.app
+#mv ./SuccessionDown32 ./SuccessionDown.app/SuccessionDown32
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown
+#ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown32
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionHelper
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/attach
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-armv7
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64e
+rm -f ./SuccessionDown.app/embedded.mobileprovision
+mkdir ./com.moski.SuccessionDown
+cp -r ./Template/* ./com.moski.SuccessionDown/
+mkdir com.moski.SuccessionDown/Applications/
+mv SuccessionDown.app com.moski.SuccessionDown/Applications/
+sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionDown
+#sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionDown32
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionHelper
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/attach
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-armv7
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64e
+#rm -rf ./Build
 rm -rf ./Index
 find . -type f -name .DS_Store -delete && xattr -cr *
-sudo fakeroot dpkg-deb -Zgzip -b com.samgisaninja.SuccessionRestore com.samgisaninja.successionrestore.deb && rm -r com.samgisaninja.SuccessionRestore
+sudo fakeroot dpkg-deb -Zgzip -b com.moski.SuccessionDown com.moski.SuccessionDown.deb
 
-## Changes made by nobbele/4ppleCracker
+echo "INSTALLING TO DEVICE"
+
+echo "Trying to move deb to device"
+scp com.moski.SuccessionDown.deb root@192.168.1.101:/tmp
+echo "Trying to install deb"
+ssh root@192.168.1.101 "dpkg -i /tmp/com.moski.SuccessionDown.deb && uicache --path /Applications/SuccessionDown.app/"
+echo "Success!"
+
+## Changes made by nobbele/4ppleCracker/moski

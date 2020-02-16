@@ -32,23 +32,23 @@ do
         if [ "$MAJORVERSION" -gt 15 ]
         then
             echo "Succession has detected iOS 10.0 or higher!"
-            rm /Applications/SuccessionRestore.app/SuccessionHelper
-            rm /Applications/SuccessionRestore.app/SuccessionRestore32
-            rm /Applications/SuccessionRestore.app/attach
-            rm /Applications/SuccessionRestore.app/hdik-armv7
-            rm /Applications/SuccessionRestore.app/hdik-arm64e
-            mv /Applications/SuccessionRestore.app/hdik-arm64 /Applications/SuccessionRestore.app/hdik
-            rm /Applications/SuccessionRestore.app/binaryinfo.txt
+            rm /Applications/SuccessionDown.app/SuccessionHelper
+            rm /Applications/SuccessionDown.app/SuccessionDown32
+            rm /Applications/SuccessionDown.app/attach
+            rm /Applications/SuccessionDown.app/hdik-armv7
+            rm /Applications/SuccessionDown.app/hdik-arm64e
+            mv /Applications/SuccessionDown.app/hdik-arm64 /Applications/SuccessionDown.app/hdik
+            rm /Applications/SuccessionDown.app/binaryinfo.txt
         elif [ "$MAJORVERSION" -lt 16 ]
         then
             echo "Succession has detected iOS 9.3.5 or lower!"
-            mv /Applications/SuccessionRestore.app/SuccessionRestore /Applications/SuccessionRestore.app/SuccessionRestore_
-            mv /Applications/SuccessionRestore.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionRestore.app/attach
-            rm /Applications/SuccessionRestore.app/hdik-armv7
-            rm /Applications/SuccessionRestore.app/hdik-arm64e
-            mv /Applications/SuccessionRestore.app/hdik-arm64 /Applications/SuccessionRestore.app/hdik
-            rm /Applications/SuccessionRestore.app/binaryinfo.txt
+            mv /Applications/SuccessionDown.app/SuccessionRestore /Applications/SuccessionRestore.app/SuccessionRestore_
+            mv /Applications/SuccessionDown.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
+            rm /Applications/SuccessionDown.app/attach
+            rm /Applications/SuccessionDown.app/hdik-armv7
+            rm /Applications/SuccessionDown.app/hdik-arm64e
+            mv /Applications/SuccessionDown.app/hdik-arm64 /Applications/SuccessionRestore.app/hdik
+            rm /Applications/SuccessionDown.app/binaryinfo.txt
         fi
     fi
 done
@@ -60,24 +60,24 @@ do
         if [ "$MAJORVERSION" -gt 15 ]
         then
             echo "Succession has detected iOS 10.0 or higher!"
-            rm /Applications/SuccessionRestore.app/SuccessionHelper
-            rm /Applications/SuccessionRestore.app/SuccessionRestore
-            mv /Applications/SuccessionRestore.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionRestore.app/attach
-            rm /Applications/SuccessionRestore.app/hdik-arm64
-            rm /Applications/SuccessionRestore.app/hdik-arm64e
-            mv /Applications/SuccessionRestore.app/hdik-armv7 /Applications/SuccessionRestore.app/hdik
-            rm /Applications/SuccessionRestore.app/binaryinfo.txt
+            rm /Applications/SuccessionDown.app/SuccessionHelper
+            rm /Applications/SuccessionDown.app/SuccessionRestore
+            mv /Applications/SuccessionDown.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore
+            rm /Applications/SuccessionDown.app/attach
+            rm /Applications/SuccessionDown.app/hdik-arm64
+            rm /Applications/SuccessionDown.app/hdik-arm64e
+            mv /Applications/SuccessionDown.app/hdik-armv7 /Applications/SuccessionRestore.app/hdik
+            rm /Applications/SuccessionDown.app/binaryinfo.txt
         elif [ "$MAJORVERSION" -lt 16 ]
         then
             echo "Succession has detected iOS 9.3.5 or lower!"
-            rm /Applications/SuccessionRestore.app/SuccessionRestore
-            mv /Applications/SuccessionRestore.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore_
-            mv /Applications/SuccessionRestore.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionRestore.app/hdik-arm64
-            rm /Applications/SuccessionRestore.app/hdik-arm64e
-            rm /Applications/SuccessionRestore.app/hdik-armv7
-            rm /Applications/SuccessionRestore.app/binaryinfo.txt
+            rm /Applications/SuccessionDown.app/SuccessionRestore
+            mv /Applications/SuccessionDown.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore_
+            mv /Applications/SuccessionDown.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
+            rm /Applications/SuccessionDown.app/hdik-arm64
+            rm /Applications/SuccessionDown.app/hdik-arm64e
+            rm /Applications/SuccessionDown.app/hdik-armv7
+            rm /Applications/SuccessionDown.app/binaryinfo.txt
         fi
     fi
 done
@@ -89,6 +89,8 @@ if [ ! -f /Applications/Setup.app/Setup ]; then
     fi
 fi
 echo "Succession by Sam Gardner // Samg_is_a_Ninja"
+echo "Ruined by Matthew Pierson // Moski"
 echo "Special Thanks to MidnightChips, pwn20wnd, Cryptiiic, PsychoTea, uroboro, comex, and 4ppleCracker"
+uicache
 
 exit 0

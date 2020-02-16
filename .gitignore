@@ -5,3 +5,7 @@ Index
 *.deb
 .logs
 .vscode
+com.moski.SuccessionRestore/
+com.moski.SuccessionDown/
+compile5s
+sep.plist

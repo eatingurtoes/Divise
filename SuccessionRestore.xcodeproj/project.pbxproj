@@ -137,7 +137,7 @@
 		8D47CCB422C86B7800BCFAED /* OZZipException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZZipException.m; sourceTree = "<group>"; };
 		8D47CCB522C86B7800BCFAED /* OZZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZZipWriteStream.m; sourceTree = "<group>"; };
 		8D4C260B21BF57C700BBA404 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
-		8D5BA2751F7C792E00A169BF /* SuccessionRestore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuccessionRestore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5BA2751F7C792E00A169BF /* SuccessionDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuccessionDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5BA2781F7C792E00A169BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8D5BA2791F7C792E00A169BF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8D5BA27B1F7C792E00A169BF /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
@@ -305,7 +305,7 @@
 		8D5BA2761F7C792E00A169BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5BA2751F7C792E00A169BF /* SuccessionRestore.app */,
+				8D5BA2751F7C792E00A169BF /* SuccessionDown.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,10 +330,10 @@
 				8D5BA2861F7C792E00A169BF /* Info.plist */,
 				8D5BA2831F7C792E00A169BF /* LaunchScreen.storyboard */,
 				8D5BA2871F7C792E00A169BF /* main.m */,
-				8D5BA27E1F7C792E00A169BF /* Main.storyboard */,
 				8D4C260B21BF57C700BBA404 /* NSTask.h */,
 				8DF38BF323904B9300C65695 /* RestoreViewController.h */,
 				8DF38BF423904B9300C65695 /* RestoreViewController.m */,
+				8D5BA27E1F7C792E00A169BF /* Main.storyboard */,
 				8DE5B2A622611C0F00502C8F /* SettingsTableViewController.h */,
 				8DE5B2A722611C0F00502C8F /* SettingsTableViewController.m */,
 				8D8F2FA82264095D0044CF00 /* SpecialThanksTableViewController.h */,
@@ -348,9 +348,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5BA2741F7C792E00A169BF /* SuccessionRestore */ = {
+		8D5BA2741F7C792E00A169BF /* SuccessionDown */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8D5BA2A11F7C792F00A169BF /* Build configuration list for PBXNativeTarget "SuccessionRestore" */;
+			buildConfigurationList = 8D5BA2A11F7C792F00A169BF /* Build configuration list for PBXNativeTarget "SuccessionDown" */;
 			buildPhases = (
 				8D5BA2711F7C792E00A169BF /* Sources */,
 				8D5BA2721F7C792E00A169BF /* Frameworks */,
@@ -361,9 +361,9 @@
 			);
 			dependencies = (
 			);
-			name = SuccessionRestore;
+			name = SuccessionDown;
 			productName = SuccessionRestore;
-			productReference = 8D5BA2751F7C792E00A169BF /* SuccessionRestore.app */;
+			productReference = 8D5BA2751F7C792E00A169BF /* SuccessionDown.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -399,7 +399,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5BA2741F7C792E00A169BF /* SuccessionRestore */,
+				8D5BA2741F7C792E00A169BF /* SuccessionDown */,
 			);
 		};
 /* End PBXProject section */
@@ -607,7 +607,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 62PB6NV7YN;
+				DEVELOPMENT_TEAM = 3E68U2UV9Z;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -620,9 +620,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SuccessionRestore",
 				);
-				MARKETING_VERSION = 1.4.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.samgisaninja.SuccessionRestore;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moski.SuccessionRestoreDown;
+				PRODUCT_NAME = SuccessionDown;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -633,7 +633,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 62PB6NV7YN;
+				DEVELOPMENT_TEAM = 3E68U2UV9Z;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -646,9 +646,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SuccessionRestore",
 				);
-				MARKETING_VERSION = 1.4.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.samgisaninja.SuccessionRestore;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moski.SuccessionRestoreDown;
+				PRODUCT_NAME = SuccessionDown;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -665,7 +665,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8D5BA2A11F7C792F00A169BF /* Build configuration list for PBXNativeTarget "SuccessionRestore" */ = {
+		8D5BA2A11F7C792F00A169BF /* Build configuration list for PBXNativeTarget "SuccessionDown" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D5BA2A21F7C792F00A169BF /* Debug */,

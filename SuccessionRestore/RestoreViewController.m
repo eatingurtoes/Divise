@@ -557,6 +557,7 @@
                                             @"--exclude=/devicetree",
                                             @"--exclude=/kernelcache",
                                             @"--exclude=/ramdisk",
+                                            @"--exclude=/usr/share/firmware/",
                                             @"/private/var/MobileSoftwareUpdate/mnt1/.",
                                             @"/", nil];
         if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/Caches/xpcproxy"] || [[NSFileManager defaultManager] fileExistsAtPath:@"/var/tmp/xpcproxy"]) {
@@ -575,6 +576,8 @@
             [rsyncMutableArgs addObject:@"--dry-run"];
         }
         if ([[_successionPrefs objectForKey:@"update-install"] isEqual:@(1)]) {
+            // This is redundent as this fork is purely for tethered downgrades, which need the user partition to NOT be wiped
+        
             [self logToFile:@"update install mode enabled, excluding user data and uicache" atLineNumber:__LINE__];
             [rsyncMutableArgs addObject:@"--exclude=/var"];
             [rsyncMutableArgs addObject:@"--exclude=/private/var/"];
@@ -584,10 +587,12 @@
             [self logToFile:@"user elected to create new orig-fs after restore, excluding snappy" atLineNumber:__LINE__];
             [rsyncMutableArgs addObject:@"--exclude=/usr/bin/snappy"];
         }
-        if ([[_successionPrefs objectForKey:@"unofficial_tethered_downgrade_compatibility"] isEqual:@(1)]) {
-            [self logToFile:@"using unsupported tethered downgrade as requested" atLineNumber:__LINE__];
-            [rsyncMutableArgs addObject:@"--exclude=/usr/share/firmware/"];
-        }
+        //if ([[_successionPrefs objectForKey:@"unofficial_tethered_downgrade_compatibility"] isEqual:@(1)]) {
+            // This is redundent as this fork is purely for tethered downgrades, so @"--exclude=/usr/share/firmware/" is added already
+        
+            //[self logToFile:@"using unsupported tethered downgrade as requested" atLineNumber:__LINE__];
+            //[rsyncMutableArgs addObject:@"--exclude=/usr/share/firmware/"];
+        //}
         [self logToFile:[NSString stringWithFormat:@"rsync %@", [rsyncMutableArgs componentsJoinedByString:@" "]] atLineNumber:__LINE__];
         NSArray *rsyncArgs = [NSArray arrayWithArray:rsyncMutableArgs];
         NSTask *rsyncTask = [[NSTask alloc] init];
