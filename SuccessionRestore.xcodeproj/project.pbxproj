@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48FAA71823FBB9EA006AA8CA /* succdatroot in Resources */ = {isa = PBXBuildFile; fileRef = 48FAA71723FBB9EA006AA8CA /* succdatroot */; };
 		8D175B5B224429CB00FF7DFD /* NSTask.h in Sources */ = {isa = PBXBuildFile; fileRef = 8D4C260B21BF57C700BBA404 /* NSTask.h */; settings = {COMPILER_FLAGS = "-w"; }; };
 		8D24F5062325C67D00215579 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		8D40BF0F231261F300240454 /* hdik-arm64e in Resources */ = {isa = PBXBuildFile; fileRef = 8D40BF0E231261F300240454 /* hdik-arm64e */; };
@@ -69,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		48FAA71723FBB9EA006AA8CA /* succdatroot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = succdatroot; sourceTree = "<group>"; };
 		8D13280020F2CFB800C72D10 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = ../../Downloads/IOKit.framework; sourceTree = "<group>"; };
 		8D13280620F2F3A800C72D10 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = SuccessionRestore/IOKit.framework; sourceTree = "<group>"; };
 		8D40BF0E231261F300240454 /* hdik-arm64e */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "hdik-arm64e"; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		8D5BA26C1F7C792E00A169BF = {
 			isa = PBXGroup;
 			children = (
+				48FAA71723FBB9EA006AA8CA /* succdatroot */,
 				8DAC229E2277B9B000EA2A59 /* beta.plist */,
 				8DC82B2C226CDC3400D21893 /* compile32.xcconfig */,
 				8D73E98A232636B70016335E /* compile64.xcconfig */,
@@ -419,6 +422,7 @@
 				8D40BF0F231261F300240454 /* hdik-arm64e in Resources */,
 				8D73E989232635580016335E /* SuccessionHelper in Resources */,
 				8DF4B8C523AF1AE3009EAB13 /* attach in Resources */,
+				48FAA71823FBB9EA006AA8CA /* succdatroot in Resources */,
 				8D24F5062325C67D00215579 /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +624,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SuccessionRestore",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.moski.SuccessionRestoreDown;
 				PRODUCT_NAME = SuccessionDown;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -646,7 +650,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SuccessionRestore",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.moski.SuccessionRestoreDown;
 				PRODUCT_NAME = SuccessionDown;
 				TARGETED_DEVICE_FAMILY = "1,2";

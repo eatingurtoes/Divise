@@ -5,6 +5,7 @@ Index
 *.deb
 .logs
 .vscode
+succdatroot/.theos
 com.moski.SuccessionRestore/
 com.moski.SuccessionDown/
 compile5s

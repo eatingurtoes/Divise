@@ -90,7 +90,6 @@ if [ ! -f /Applications/Setup.app/Setup ]; then
 fi
 echo "Succession by Sam Gardner // Samg_is_a_Ninja"
 echo "Ruined by Matthew Pierson // Moski"
-echo "Special Thanks to MidnightChips, pwn20wnd, Cryptiiic, PsychoTea, uroboro, comex, and 4ppleCracker"
-uicache
+echo "Special Thanks to MidnightChips, pwn20wnd, Cryptiiic, PsychoTea, wstyres, uroboro, comex, and 4ppleCracker"
 
 exit 0

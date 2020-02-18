@@ -61,4 +61,6 @@ Requires `fakeroot`, `ldid`, and `dpkg`. If you dont have them already, they can
 
 `brew install dpkg`
 
+You may need to edit "succdatroot/Makefile" and change the theos directory from "~/.theos" to "$THEOS" or where ever you have Theos setup. Also edit "compile" and change the IP address to your device's. 
+
 Once you have the dependencies, compiling is fairly easy, just run the compile script in the root directory of this project, it will automatically create a .deb file for installation. You can also use the "install" script to automate the installation process, this requires OpenSSH or dropbear or some alternative of it and SFTP to be available on your device (OpenSSH has both). The install script used to be a part of the compile script, but I got annoyed by it so I split the two. I might delete the install script some day, idk.

@@ -5,10 +5,15 @@ rm -rf ./com.moski.SuccessionDown
 xcodebuild -target SuccessionDown -xcconfig compile64.xcconfig -configuration Release >> /dev/null
 mv ./Build/Release-iphoneos/SuccessionDown.app ./SuccessionDown.app
 #mv ./SuccessionDown32 ./SuccessionDown.app/SuccessionDown32
+echo "COMPILING SUCCDATROOT..."
+cd ./succdatroot/ && make
+cd ..
+cp ./succdatroot/.theos/obj/debug/succdatroot ./SuccessionDown.app/succdatroot
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown
 #ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown32
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionHelper
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/attach
+ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/succdatroot
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-armv7
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64e
@@ -21,6 +26,7 @@ sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.ap
 #sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionDown32
 sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionHelper
 sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/attach
+sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/succdatroot
 sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-armv7
 sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64
 sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64e
