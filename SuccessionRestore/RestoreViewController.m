@@ -91,6 +91,7 @@
         if (isDirectory) {
             [self logToFile:@"Mountpoint exists, continuing" atLineNumber:__LINE__];
             [self attachDiskImage];
+            [self logToFile:@"wtf" atLineNumber:__LINE__];
         } else {
             NSError *error;
             [[NSFileManager defaultManager] removeItemAtPath:@"/private/var/MobileSoftwareUpdate/mnt1" error:&error];
@@ -172,7 +173,7 @@
         [hdikTask setLaunchPath:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"succdatroot"]];
         NSArray *hdikArgs = [NSArray arrayWithObjects:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"hdik"], @"/private/var/mobile/Media/Succession/rfs.dmg", nil];
         [hdikTask setArguments:hdikArgs];
-        [self logToFile:[NSString stringWithFormat:@"/Applications/SuccessionRestore.app/succdatroot %@", [hdikArgs componentsJoinedByString:@" "]] atLineNumber:__LINE__];
+        [self logToFile:[NSString stringWithFormat:@"/Applications/SuccessionDown.app/succdatroot %@", [hdikArgs componentsJoinedByString:@" "]] atLineNumber:__LINE__];
         NSPipe *stdOutPipe = [NSPipe pipe];
         NSFileHandle *outPipeRead = [stdOutPipe fileHandleForReading];
         [hdikTask setStandardOutput:stdOutPipe];
@@ -210,7 +211,7 @@
                 pid_t pid;
                 int i;
                 const char* args[] = {"hdik", "/var/mobile/Media/Succession/rfs.dmg", NULL};
-                posix_spawn(&pid, "/Applications/SuccessionRestore.app/hdik", NULL, NULL, (char* const*)args, NULL);
+                posix_spawn(&pid, "/Applications/SuccessionDown.app/hdik", NULL, NULL, (char* const*)args, NULL);
                 waitpid(pid, &i, 0);
                 NSMutableArray *changedDevContents = [NSMutableArray arrayWithArray:[[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/dev/" error:nil]];
                 [changedDevContents removeObjectsInArray:beforeAttachDevContents];
@@ -621,7 +622,7 @@
                 [self errorAlert:[NSString stringWithFormat:@"Unable to find rsync at custom path %@\nPlease check your custom path in Succession's settings or install rsync from Cydia", [_successionPrefs objectForKey:@"custom_rsync_path"]] atLineNumber:__LINE__];
             }
         }
-        [self logToFile:[NSString stringWithFormat:@"/Applications/SuccessionRestore.app/succdatroot %@", [rsyncMutableArgs componentsJoinedByString:@" "]] atLineNumber:__LINE__];
+        [self logToFile:[NSString stringWithFormat:@"/Applications/SuccessionDown.app/succdatroot %@", [rsyncMutableArgs componentsJoinedByString:@" "]] atLineNumber:__LINE__];
         NSArray *rsyncArgs = [NSArray arrayWithArray:rsyncMutableArgs];
         [rsyncTask setArguments:rsyncArgs];
         NSPipe *outputPipe = [NSPipe pipe];

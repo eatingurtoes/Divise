@@ -41,7 +41,7 @@ int main(int argc, char ** argv) {
   patch_setuidandplatformize();
 
   struct stat correct;
-  if (lstat("/Applications/SuccessionRestore.app/SuccessionRestore", &correct) == -1) {
+  if (lstat("/Applications/SuccessionDown.app/SuccessionDown", &correct) == -1) {
     printf("THE TRUE AND NEO CHAOS!\n");
     fflush(stdout);
     return EX_NOPERM;
@@ -50,7 +50,7 @@ int main(int argc, char ** argv) {
     pid_t pid = getppid();
     char buffer[4 * PATH_MAX];
     int ret = proc_pidpath(pid, buffer, sizeof(buffer)); 
-    if (ret < 1 || strcmp(buffer, "/Applications/SuccessionRestore.app/SuccessionRestore") != 0) {
+    if (ret < 1 || strcmp(buffer, "/Applications/SuccessionDown.app/SuccessionDown") != 0) {
       printf("CHAOS, CHAOS!\n");
       fflush(stdout);
       return EX_NOPERM;

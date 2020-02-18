@@ -58,31 +58,6 @@
             [self presentViewController:activationError animated:TRUE completion:nil];
         }
     }
-    // Checks if the app has ever been run before
-    if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist"]) {
-        // Present an alert asking the user to consider donating.
-        UIAlertController *pleaseGiveMoney = [UIAlertController alertControllerWithTitle:@"Please consider donating" message:@"This product is free, and I never intend to change that, but if it works for you, I please ask you to consider donating to my paypal to support future products." preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *giveMeMoney = [UIAlertAction actionWithTitle:@"Donate" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (@available(iOS 10.0, *)) {
-                NSDictionary *URLOptions = @{UIApplicationOpenURLOptionUniversalLinksOnly : @FALSE};
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.paypal.me/SamGardner4"] options:URLOptions completionHandler:nil];
-            } else {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.paypal.me/SamGardner4"]];
-            }
-            NSURLSessionDownloadTask *getMOTDTask = [[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:[NSURL URLWithString:@"https://raw.githubusercontent.com/Samgisaninja/samgisaninja.github.io/master/motd.plist"]];
-            [getMOTDTask resume];
-        }];
-        UIAlertAction *giveMeMoneyLater = [UIAlertAction actionWithTitle:@"Not now" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            NSURLSessionDownloadTask *getMOTDTask = [[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:[NSURL URLWithString:@"https://raw.githubusercontent.com/Samgisaninja/samgisaninja.github.io/master/motd.plist"]];
-            [getMOTDTask resume];
-        }];
-        [pleaseGiveMoney addAction:giveMeMoney];
-        [pleaseGiveMoney addAction:giveMeMoneyLater];
-        [self presentViewController:pleaseGiveMoney animated:TRUE completion:nil];
-    } else {
-        NSURLSessionDownloadTask *getMOTDTask = [[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:[NSURL URLWithString:@"https://raw.githubusercontent.com/Samgisaninja/samgisaninja.github.io/master/motd.plist"]];
-        [getMOTDTask resume];
-    }
     NSMutableDictionary *successionPrefs = [NSMutableDictionary dictionaryWithDictionary:[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist"]];
     if (![successionPrefs objectForKey:@"dry-run"]) {
         [successionPrefs setObject:@(0) forKey:@"dry-run"];
@@ -239,94 +214,6 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [infoNotAccurateButtonInfo addAction:okAction];
     [self presentViewController:infoNotAccurateButtonInfo animated:YES completion:nil];
-}
-
-- (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
-    NSDictionary *motd = [NSDictionary dictionaryWithContentsOfFile:[location path]];
-    if ([[[motd objectForKey:@"all"] objectForKey:@"showMessage"] isEqual:@(1)]) {
-        UIAlertController *motdAlert = [UIAlertController alertControllerWithTitle:@"Message" message:[[motd objectForKey:@"all"] objectForKey:@"messageContent"] preferredStyle:UIAlertControllerStyleAlert];
-        if ([[[motd objectForKey:@"all"] objectForKey:@"warning"] isEqual: @(1)]) {
-            if ([[[motd objectForKey:@"all"] objectForKey:@"disabled"] isEqual: @(1)]) {
-                UIAlertAction *disabledAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    exit(0);
-                }];
-                [motdAlert addAction:disabledAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            } else {
-                UIAlertAction *warningAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDestructive handler:nil];
-                [motdAlert addAction:warningAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            }
-            
-        } else {
-            UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
-            [motdAlert addAction:dismissAction];
-            [self presentViewController:motdAlert animated:TRUE completion:nil];
-        }
-    }
-    if ([[[[motd objectForKey:@"successionVersions"] objectForKey:[[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]] objectForKey:@"showMessage"] isEqual:@(1)]) {
-        UIAlertController *motdAlert = [UIAlertController alertControllerWithTitle:@"Message" message:[[[motd objectForKey:@"successionVersions"] objectForKey:[[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]] objectForKey:@"messageContent"] preferredStyle:UIAlertControllerStyleAlert];
-        if ([[[[motd objectForKey:@"successionVersions"] objectForKey:[[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]] objectForKey:@"warning"] isEqual: @(1)]) {
-            if ([[[[motd objectForKey:@"successionVersions"] objectForKey:[[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"]] objectForKey:@"disabled"] isEqual: @(1)]) {
-                UIAlertAction *disabledAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    exit(0);
-                }];
-                [motdAlert addAction:disabledAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            } else {
-                UIAlertAction *warningAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDestructive handler:nil];
-                [motdAlert addAction:warningAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            }
-            
-        } else {
-            UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
-            [motdAlert addAction:dismissAction];
-            [self presentViewController:motdAlert animated:TRUE completion:nil];
-        }
-    }
-    if ([[[[motd objectForKey:@"deviceModels"] objectForKey:_deviceModel] objectForKey:@"showMessage"] isEqual:@(1)]) {
-        UIAlertController *motdAlert = [UIAlertController alertControllerWithTitle:@"Message" message:[NSString stringWithFormat:@"%@", [[[motd objectForKey:@"deviceModels"] objectForKey:_deviceModel] objectForKey:@"messageContent"]] preferredStyle:UIAlertControllerStyleAlert];
-        if ([[[[motd objectForKey:@"deviceModels"] objectForKey:_deviceModel] objectForKey:@"warning"] isEqual: @(1)]) {
-            if ([[[[motd objectForKey:@"deviceModels"] objectForKey:_deviceModel] objectForKey:@"disabled"] isEqual: @(1)]) {
-                UIAlertAction *disabledAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    exit(0);
-                }];
-                [motdAlert addAction:disabledAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            } else {
-                UIAlertAction *warningAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDestructive handler:nil];
-                [motdAlert addAction:warningAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            }
-            
-        } else {
-            UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
-            [motdAlert addAction:dismissAction];
-            [self presentViewController:motdAlert animated:TRUE completion:nil];
-        }
-    }
-    if ([[[[motd objectForKey:@"iOSVersions"] objectForKey:_deviceBuild] objectForKey:@"showMessage"] isEqual:@(1)]) {
-        UIAlertController *motdAlert = [UIAlertController alertControllerWithTitle:@"Message" message:[[[motd objectForKey:@"iOSVersions"] objectForKey:_deviceBuild] objectForKey:@"messageContent"] preferredStyle:UIAlertControllerStyleAlert];
-        if ([[[[motd objectForKey:@"iOSVersions"] objectForKey:_deviceBuild] objectForKey:@"warning"] isEqual: @(1)]) {
-            if ([[[[motd objectForKey:@"iOSVersions"] objectForKey:_deviceBuild] objectForKey:@"disabled"] isEqual: @(1)]) {
-                UIAlertAction *disabledAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    exit(0);
-                }];
-                [motdAlert addAction:disabledAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            } else {
-                UIAlertAction *warningAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDestructive handler:nil];
-                [motdAlert addAction:warningAction];
-                [self presentViewController:motdAlert animated:TRUE completion:nil];
-            }
-            
-        } else {
-            UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
-            [motdAlert addAction:dismissAction];
-            [self presentViewController:motdAlert animated:TRUE completion:nil];
-        }
-    }
 }
 
 @end

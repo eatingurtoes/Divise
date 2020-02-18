@@ -8,7 +8,7 @@ mv ./Build/Release-iphoneos/SuccessionDown.app ./SuccessionDown.app
 echo "COMPILING SUCCDATROOT..."
 cd ./succdatroot/ && make
 cd ..
-cp ./succdatroot/.theos/obj/debug/succdatroot ./SuccessionDown.app/succdatroot
+cp ./succdatroot/.theos/obj/debug/succdatroot/succdatroot ./SuccessionDown.app/succdatroot
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown
 #ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown32
 ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionHelper

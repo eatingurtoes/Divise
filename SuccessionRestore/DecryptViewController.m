@@ -42,7 +42,7 @@
     _deviceBuild = [NSString stringWithUTF8String:buildChar];
     free(buildChar);
         NSTask *decryptDMGTask = [[NSTask alloc] init];
-        [decryptDMGTask setLaunchPath:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"succdatroot"]];
+        [decryptDMGTask setArguments:[NSArray arrayWithObjects:@"dmg", @"extract", @"/var/mobile/Media/Succession/encrypted.dmg", @"/var/mobile/Media/Succession/rfs.dmg", @"-k", [self getRFSKey], nil]];
         NSPipe *outputPipe = [NSPipe pipe];
         [decryptDMGTask setStandardOutput:outputPipe];
         NSFileHandle *stdoutHandle = [outputPipe fileHandleForReading];
