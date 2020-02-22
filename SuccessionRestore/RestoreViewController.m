@@ -741,7 +741,7 @@
                                     reboot(0x400);
                                 } else {
                                     [self logToFile:@"/usr/bin/uicache doesnt exist, oops. rebooting..." atLineNumber:__LINE__];
-                                    reboot(0x400);
+                                reboot(0x400);
                                 }
                             } else if ([[self->_successionPrefs objectForKey:@"dry-run"] isEqual:@(1)]){
                                 [self logToFile:@"That was a test mode restore, but somehow the first check for this didnt get detected... anways, the app will just hang now..." atLineNumber:__LINE__];
@@ -750,6 +750,7 @@
                                 extern mach_port_t SBSSpringBoardServerPort(void);
                                 [self logToFile:[NSString stringWithFormat:@"That was a normal restore. go, mobile_obliteration! %u", SBSSpringBoardServerPort()] atLineNumber:__LINE__];
                                 SBDataReset(SBSSpringBoardServerPort(), 5);
+                                reboot(0x400);
                             }
                         }];
                     }
@@ -784,6 +785,8 @@
     } else {
         [self errorAlert:@"Mountpoint does not contain rootfilesystem, please restart the app and try again." atLineNumber:__LINE__];
     }
+    // Note that having a reboot call here reboots before the restore starts :/ oops
+    
 }
 
 

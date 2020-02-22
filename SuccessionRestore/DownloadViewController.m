@@ -229,7 +229,7 @@
             
             [getSEPTask resume];
             
-            NSArray *unsupportedDevices = @[@"iPhone7,1", @"iPhone7,2", @"iPhone8,1", @"iPhone8,2", @"iPhone8,4", @"iPad11,3", @"iPad11,4", @"iPad11,1", @"iPad11,2", @"iPhone11,8", @"iPhone11,2", @"iPhone11,4", @"iPhone11,6", @"iPhone12,1", @"iPhone12,3", @"iPhone12,5", @"iPad6,11", @"iPad6,12", @"iPad6,7", @"iPad6,8", @"iPad6,3", @"iPad6,4", @"iPad5,1", @"iPad5,2", @"iPod7,1", @"iPad5,3", @"iPad5,4"]; // Note that this is only unsupported 64 bit devices, I'm way to lazy to add 32 bit devices
+            NSArray *unsupportedDevices = @[@"iPad11,3", @"iPad11,4", @"iPad11,1", @"iPad11,2", @"iPhone11,8", @"iPhone11,2", @"iPhone11,4", @"iPhone11,6", @"iPhone12,1", @"iPhone12,3", @"iPhone12,5", @"iPad6,11", @"iPad6,12", @"iPad6,7", @"iPad6,8", @"iPad6,3", @"iPad6,4", @"iPad5,1", @"iPad5,2", @"iPod7,1", @"iPad5,3", @"iPad5,4"]; // Note that this is only unsupported 64 bit devices, I'm way to lazy to add 32 bit devices
             
             BOOL *supportedDeviceCheck = [unsupportedDevices containsObject:(self->deviceModel)];
             if (supportedDeviceCheck){
