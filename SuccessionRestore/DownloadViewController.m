@@ -230,8 +230,10 @@
             [getSEPTask resume];
             
             NSArray *unsupportedDevices = @[@"iPad11,3", @"iPad11,4", @"iPad11,1", @"iPad11,2", @"iPhone11,8", @"iPhone11,2", @"iPhone11,4", @"iPhone11,6", @"iPhone12,1", @"iPhone12,3", @"iPhone12,5", @"iPad6,11", @"iPad6,12", @"iPad6,7", @"iPad6,8", @"iPad6,3", @"iPad6,4", @"iPad5,1", @"iPad5,2", @"iPod7,1", @"iPad5,3", @"iPad5,4"]; // Note that this is only unsupported 64 bit devices, I'm way to lazy to add 32 bit devices
+            NSArray *semisupportedDevices = @[@"iPhone8,2", @"iPhone7,1", @"iPhone8,4"]; // These devices have no 11.x/12.x keys on theiphonewiki so we won't be able to boot them, but will give user choice to continue
             
             BOOL *supportedDeviceCheck = [unsupportedDevices containsObject:(self->deviceModel)];
+            BOOL *semisupportedDeviceCheck = [semisupportedDevices containsObject:(self->deviceModel)];
             if (supportedDeviceCheck){
                 NSLog(@"Device is not supported by Checkm8 currently, erroring");
                 NSString *devicemodelerror = [NSString stringWithFormat:@"Your %@ is not compatible right now sorry", self->deviceModel];
@@ -243,6 +245,15 @@
                 [self presentViewController:alertController2 animated:YES completion:nil];
             } else {
                 NSLog(@"Device is supported by Checkm8!");
+                if (semisupportedDeviceCheck){
+                    NSString *devicemodelerror = [NSString stringWithFormat:@"Your %@ has no 11.x/12.x keys on theiphonewiki, so you won't be able to tether boot", self->deviceModel];
+                    UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:devicemodelerror message:@"Press OK to continue if you are aware of this or close the app" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [self logToFile:[NSString stringWithFormat:@"User chose to continue downgrade even though they won't be able to boot =) I warned them at least"] atLineNumber:__LINE__];
+                    }];
+                    [alertController2 addAction:confirmAction];
+                    [self presentViewController:alertController2 animated:YES completion:nil];
+                }
                 self->deviceBuild = [[alertController textFields][0] text];
                 NSString *ipswAPIURLString = [NSString stringWithFormat:@"https://api.ipsw.me/v2/%@/%@/url/", self->deviceModel, self->deviceBuild];
                        // to use the API mentioned above, I create a string that incorporates the iOS buildnumber and device model, then it is converted into an NSURL...

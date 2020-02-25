@@ -750,7 +750,7 @@
                                 extern mach_port_t SBSSpringBoardServerPort(void);
                                 [self logToFile:[NSString stringWithFormat:@"That was a normal restore. go, mobile_obliteration! %u", SBSSpringBoardServerPort()] atLineNumber:__LINE__];
                                 SBDataReset(SBSSpringBoardServerPort(), 5);
-                                reboot(0x400);
+                                //reboot(0x400);
                             }
                         }];
                     }
