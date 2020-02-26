@@ -33,7 +33,6 @@ do
         then
             echo "Succession has detected iOS 10.0 or higher!"
             rm /Applications/SuccessionDown.app/SuccessionHelper
-            rm /Applications/SuccessionDown.app/SuccessionDown32
             rm /Applications/SuccessionDown.app/attach
             rm /Applications/SuccessionDown.app/hdik-armv7
             rm /Applications/SuccessionDown.app/hdik-arm64e
