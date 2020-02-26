@@ -4,7 +4,7 @@
 
 ## Tethered Downgrades
 
-Either compile and install yourself or [add my repo](cydia://url/https://cydia.saurik.com/api/share#?source=http://matthewpierson.github.io) and install it from there
+Either compile and install yourself or [add my repo](http://matthewpierson.github.io) and install it from there
 
 This fork is purely for tethered downgrades! This is likely very unstable, probably won't work and might damage your device. It will probably be fine but be warned. 
 
