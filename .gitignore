@@ -8,5 +8,7 @@ Index
 succdatroot/.theos
 com.moski.SuccessionRestore/
 com.moski.SuccessionDown/
+com.moski.*/
 compile5s
 sep.plist
+TODO

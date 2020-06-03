@@ -1,7 +1,7 @@
 #!/bin/bash
-mkdir /var/mobile/Media/Succession/
-chmod 0777 /var/mobile/Media/Succession/
-killall SuccessionRestore
+mkdir /var/mobile/Media/Divise/
+chmod 0777 /var/mobile/Media/Divise/
+killall Divisé
 KERNELVERSION=$(uname -r)
 searchstring="."
 MINORVERSION=${KERNELVERSION%$searchstring*}
@@ -14,40 +14,28 @@ for deviceModel in ${arm64eDevices[@]};
 do
     if [ "$MYMACHINEID" == "$deviceModel" ]
     then
-        echo "Succession has detected arm64e!"
-        rm /Applications/SuccessionRestore.app/SuccessionHelper
-        rm /Applications/SuccessionRestore.app/SuccessionRestore32
-        rm /Applications/SuccessionRestore.app/attach
-        rm /Applications/SuccessionRestore.app/hdik-armv7
-        rm /Applications/SuccessionRestore.app/hdik-arm64
-        mv /Applications/SuccessionRestore.app/hdik-arm64e /Applications/SuccessionRestore.app/hdik
-        rm /Applications/SuccessionRestore.app/binaryinfo.txt
+        echo "Divisé has detected arm64e!"
+        echo "arm64e is unsupported, deleting Divisé and exiting! (You shouldn't have made it this far!)"
+        #rm -rf /Applications/Divisé.app
+        uicache
+        exit
 	fi
 done
 for deviceModel in ${arm64Devices[@]};
 do
     if [ "$MYMACHINEID" == "$deviceModel" ]
     then
-        echo "Succession has detected 64-bit!"
+        echo "Divisé has detected 64-bit!"
         if [ "$MAJORVERSION" -gt 15 ]
         then
-            echo "Succession has detected iOS 10.0 or higher!"
-            rm /Applications/SuccessionDown.app/SuccessionHelper
-            rm /Applications/SuccessionDown.app/attach
-            rm /Applications/SuccessionDown.app/hdik-armv7
-            rm /Applications/SuccessionDown.app/hdik-arm64e
-            mv /Applications/SuccessionDown.app/hdik-arm64 /Applications/SuccessionDown.app/hdik
-            rm /Applications/SuccessionDown.app/binaryinfo.txt
+            echo "Divisé has detected iOS 10.0 or higher!"
+            mv /Applications/Divisé.app/hdik-arm64 /Applications/Divisé.app/hdik
+            rm /Applications/Divisé.app/binaryinfo.txt
         elif [ "$MAJORVERSION" -lt 16 ]
         then
-            echo "Succession has detected iOS 9.3.5 or lower!"
-            mv /Applications/SuccessionDown.app/SuccessionRestore /Applications/SuccessionRestore.app/SuccessionRestore_
-            mv /Applications/SuccessionDown.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionDown.app/attach
-            rm /Applications/SuccessionDown.app/hdik-armv7
-            rm /Applications/SuccessionDown.app/hdik-arm64e
-            mv /Applications/SuccessionDown.app/hdik-arm64 /Applications/SuccessionRestore.app/hdik
-            rm /Applications/SuccessionDown.app/binaryinfo.txt
+            echo "Divisé has detected iOS 9.3.5 or lower!"
+            mv /Applications/Divisé.app/hdik-arm64 /Applications/Divisé.app/hdik
+            rm /Applications/Divisé.app/binaryinfo.txt
         fi
     fi
 done
@@ -55,29 +43,10 @@ for deviceModel in ${armv7Devices[@]};
 do
     if [ "$MYMACHINEID" == "$deviceModel" ]
     then
-        echo "Succession has detected 32-bit!"
-        if [ "$MAJORVERSION" -gt 15 ]
-        then
-            echo "Succession has detected iOS 10.0 or higher!"
-            rm /Applications/SuccessionDown.app/SuccessionHelper
-            rm /Applications/SuccessionDown.app/SuccessionRestore
-            mv /Applications/SuccessionDown.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionDown.app/attach
-            rm /Applications/SuccessionDown.app/hdik-arm64
-            rm /Applications/SuccessionDown.app/hdik-arm64e
-            mv /Applications/SuccessionDown.app/hdik-armv7 /Applications/SuccessionRestore.app/hdik
-            rm /Applications/SuccessionDown.app/binaryinfo.txt
-        elif [ "$MAJORVERSION" -lt 16 ]
-        then
-            echo "Succession has detected iOS 9.3.5 or lower!"
-            rm /Applications/SuccessionDown.app/SuccessionRestore
-            mv /Applications/SuccessionDown.app/SuccessionRestore32 /Applications/SuccessionRestore.app/SuccessionRestore_
-            mv /Applications/SuccessionDown.app/SuccessionHelper /Applications/SuccessionRestore.app/SuccessionRestore
-            rm /Applications/SuccessionDown.app/hdik-arm64
-            rm /Applications/SuccessionDown.app/hdik-arm64e
-            rm /Applications/SuccessionDown.app/hdik-armv7
-            rm /Applications/SuccessionDown.app/binaryinfo.txt
-        fi
+        echo "Divisé has detected 32-bit!"
+        echo "armv7 is unsupported, deleting Divisé and exiting! (You shouldn't have made it this far!)"
+        rm -rf /Applications/Divisé.app
+        uicache
     fi
 done
 if [ ! -f /Applications/Setup.app/Setup ]; then
@@ -87,8 +56,11 @@ if [ ! -f /Applications/Setup.app/Setup ]; then
         touch /Applications/Setup.app/Setup
     fi
 fi
+mkdir -p /private/var/mnt/divise/
 echo "Succession by Sam Gardner // Samg_is_a_Ninja"
-echo "Ruined by Matthew Pierson // Moski"
+echo "Divisé by Matthew Pierson // Moski"
 echo "Special Thanks to MidnightChips, pwn20wnd, Cryptiiic, PsychoTea, wstyres, uroboro, comex, and 4ppleCracker"
+
+uicache --path /Applications/Divisé.app/
 
 exit 0

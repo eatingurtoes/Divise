@@ -27,7 +27,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 15;
+    return 16;
+}
+
+- (IBAction)backButton:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -185,7 +189,7 @@
             [[cell imageView] setImage:[UIImage imageNamed:@"hawk"]];
             break;
         }
-        case 12:
+        case 13:
         {
             UIFont *nameFont = [UIFont systemFontOfSize:17];
             NSDictionary *nameFontDict = [NSDictionary dictionaryWithObject: nameFont forKey:NSFontAttributeName];
@@ -205,19 +209,32 @@
             NSMutableAttributedString *nameString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"mosk_i\n"] attributes: nameFontDict];
             UIFont *roleFont = [UIFont systemFontOfSize:13];;
             NSDictionary *roleFontDict = [NSDictionary dictionaryWithObject: roleFont forKey:NSFontAttributeName];
-            NSMutableAttributedString *roleString = [[NSMutableAttributedString alloc] initWithString:@"For bastardising Succession for tethered downgrades" attributes: roleFontDict];
+            NSMutableAttributedString *roleString = [[NSMutableAttributedString alloc] initWithString:@"For dualboot and tethered downgrade support" attributes: roleFontDict];
             [nameString appendAttributedString:roleString];
             [[cell textLabel] setAttributedText:nameString];
             [[cell imageView] setImage:[UIImage imageNamed:@"matty"]];
             break;
         }
-        case 13:
+        case 12:
+        {
+            UIFont *nameFont = [UIFont systemFontOfSize:17];
+            NSDictionary *nameFontDict = [NSDictionary dictionaryWithObject: nameFont forKey:NSFontAttributeName];
+            NSMutableAttributedString *nameString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Halo-Michael\n"] attributes: nameFontDict];
+            UIFont *roleFont = [UIFont systemFontOfSize:13];;
+            NSDictionary *roleFontDict = [NSDictionary dictionaryWithObject: roleFont forKey:NSFontAttributeName];
+            NSMutableAttributedString *roleString = [[NSMutableAttributedString alloc] initWithString:@"Allowing me to bundle apfs_deletefs" attributes: roleFontDict];
+            [nameString appendAttributedString:roleString];
+            [[cell textLabel] setAttributedText:nameString];
+            [[cell imageView] setImage:[UIImage imageNamed:@"Halo-Michael"]];
+            break;
+        }
+        case 14:
         {
             [[cell textLabel] setText:@"Objective-Zip Copyright (c) 2009-2012, Flying Dolphin Studio All rights reserved. Used under BSD3 License."];
             [[cell imageView] setImage:nil];
             break;
         }
-        case 14:
+        case 15:
         {
             [[cell textLabel] setText:@"Attach by comex"];
             [[cell imageView] setImage:nil];

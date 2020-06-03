@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _successionPrefs = [NSDictionary dictionaryWithContentsOfFile:@"/private/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist"];
+    _successionPrefs = [NSDictionary dictionaryWithContentsOfFile:@"/private/var/mobile/Library/Preferences/com.moski.Divise.plist"];
     // Create a size_t and set it to the size used to allocate modelChar
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);

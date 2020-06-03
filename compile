@@ -1,49 +1,59 @@
+#!/bin/sh
+IP=$1
 echo "COMPILING..."
-rm -rf ./SuccessionDown.app
-rm -rf ./Build/Release-iphoneos/SuccessionDown.app
-rm -rf ./com.moski.SuccessionDown
-xcodebuild -target SuccessionDown -xcconfig compile64.xcconfig -configuration Release >> /dev/null
-mv ./Build/Release-iphoneos/SuccessionDown.app ./SuccessionDown.app
-#mv ./SuccessionDown32 ./SuccessionDown.app/SuccessionDown32
+rm -rf ./Divisé.app
+rm -rf ./Build/Release-iphoneos/Divisé.app
+rm -rf ./com.moski.Divise
+xcodebuild -target Divisé -xcconfig compile64.xcconfig -configuration Release >> /dev/null
+mv ./Build/Release-iphoneos/Divisé.app ./Divisé.app
 echo "COMPILING SUCCDATROOT..."
 cd ./succdatroot/ && make
 cd ..
-cp ./succdatroot/.theos/obj/debug/succdatroot ./SuccessionDown.app/succdatroot
-mv ./SuccessionDown.app/succdatroot ./SuccessionDown.app/succdatroot2
-mv ./SuccessionDown.app/succdatroot2/succdatroot ./SuccessionDown.app/succdatroot
-rm -rf ./SuccessionDown.app/succdatroot2 ## This is annoying and badly done but it works
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown
-#ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionDown32
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/SuccessionHelper
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/attach
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/succdatroot
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-armv7
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64
-ldid -SSuccessionEntitlements.plist ./SuccessionDown.app/hdik-arm64e
-rm -f ./SuccessionDown.app/embedded.mobileprovision
-mkdir ./com.moski.SuccessionDown
-cp -r ./Template/* ./com.moski.SuccessionDown/
-mkdir com.moski.SuccessionDown/Applications/
-mv SuccessionDown.app com.moski.SuccessionDown/Applications/
-sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionDown
-#sudo fakeroot chmod 6755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionDown32
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/SuccessionHelper
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/attach
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/succdatroot
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-armv7
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64
-sudo fakeroot chmod 0755 com.moski.SuccessionDown/Applications/SuccessionDown.app/hdik-arm64e
-#rm -rf ./Build
+cp ./succdatroot/.theos/obj/debug/succdatroot ./Divisé.app/succdatroot
+mv ./Divisé.app/succdatroot ./Divisé.app/succdatroot2
+mv ./Divisé.app/succdatroot2/succdatroot ./Divisé.app/succdatroot
+rm -rf ./Divisé.app/succdatroot2 ## This is annoying and badly done but it works
+ldid -SSuccessionEntitlements.plist ./Divisé.app/Divisé
+rm -rf ./Divisé.app/attach
+ldid -SSuccessionEntitlements.plist ./Divisé.app/succdatroot
+rm -rf ./Divisé.app/hdik-armv7
+ldid -SSuccessionEntitlements.plist ./Divisé.app/hdik-arm64
+rm -rf ./Divisé.app/hdik-arm64e
+ldid -SSuccessionEntitlements.plist ./Divisé.app/apfs_deletefs
+rm -f ./Divisé.app/embedded.mobileprovision
+mkdir ./com.moski.Divise
+cp -r ./Template/* ./com.moski.Divise/
+mkdir com.moski.Divise/Applications/
+mv Divisé.app com.moski.Divise/Applications/
+sudo fakeroot chmod 6755 com.moski.Divise/Applications/Divisé.app/Divisé
+sudo fakeroot chmod 0755 com.moski.Divise/Applications/Divisé.app/succdatroot
+sudo fakeroot chmod 0755 com.moski.Divise/Applications/Divisé.app/hdik-arm64
+sudo fakeroot chmod 0755 com.moski.Divise/Applications/Divisé.app/apfs_deletefs
+
 rm -rf ./Index
 find . -type f -name .DS_Store -delete && xattr -cr *
-sudo fakeroot dpkg-deb -Zgzip -b com.moski.SuccessionDown com.moski.SuccessionDown.deb
+sudo fakeroot dpkg-deb -Zgzip -b com.moski.Divise com.moski.Divise.1.0.deb
 
+if [ -z "$IP" ]
+then
+    echo "Getting ready for release!"
+    echo "Size:"
+    ls -la com.moski.Divise.1.0.deb
+    echo "md5:"
+    md5 com.moski.Divise.1.0.deb
+    echo "sha1:"
+    shasum -a 1 com.moski.Divise.1.0.deb
+    echo "sha256:"
+    shasum -a 256 com.moski.Divise.1.0.deb
+    echo "Done!"
+    exit
+fi
 echo "INSTALLING TO DEVICE"
 
 echo "Trying to move deb to device"
-scp com.moski.SuccessionDown.deb root@192.168.1.101:/tmp
+scp com.moski.Divise.1.0.deb root@$IP:/tmp
 echo "Trying to install deb"
-ssh root@192.168.1.101 "dpkg -i /tmp/com.moski.SuccessionDown.deb && uicache --path /Applications/SuccessionDown.app/"
+ssh root@$IP "dpkg -i /tmp/com.moski.Divise.1.0.deb && uicache --path /Applications/Divisé.app/"
 echo "Success!"
 
 ## Changes made by nobbele/4ppleCracker/moski

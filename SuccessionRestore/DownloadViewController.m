@@ -25,8 +25,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Setup background image
+    
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    
+    char *modelChar = malloc(size);
+    sysctlbyname("hw.machine", modelChar, &size, NULL, 0);
+    
+    NSString *modelThing = [NSString stringWithUTF8String:modelChar];
+    
+    if ([modelThing containsString:@"iPad"]) {
+        
+        UIImageView * bgImage =[[UIImageView alloc]initWithFrame:self.view.frame];
+
+        bgImage.image = [UIImage imageNamed:@"background-iPad.jpg"]; [self.view addSubview:bgImage];
+        
+        bgImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        bgImage.alpha = 0.75;
+
+        [self.view sendSubviewToBack:bgImage];
+        
+    } else {
+        
+        UIImageView * bgImage =[[UIImageView alloc]initWithFrame:self.view.frame];
+
+        bgImage.image = [UIImage imageNamed:@"background-iPhone.jpg"]; [self.view addSubview:bgImage];
+        
+        bgImage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        bgImage.alpha = 0.75;
+
+        [self.view sendSubviewToBack:bgImage];
+        
+    }
+    
     // Load preferences
-    _successionPrefs = [NSDictionary dictionaryWithContentsOfFile:@"/private/var/mobile/Library/Preferences/com.samgisaninja.SuccessionRestore.plist"];
+    _divisePrefs = [NSDictionary dictionaryWithContentsOfFile:@"/private/var/mobile/Library/Preferences/com.moski.Divise.plist"];
+    _dualbootPrefs = [NSMutableDictionary dictionaryWithContentsOfFile:@"/private/var/mobile/Library/Preferences/com.moski.dualboot.plist"];
     // Set up UI
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self downloadProgressBar] setHidden:TRUE];
@@ -34,95 +72,87 @@
         [[self unzipActivityIndicator] setHidden:TRUE];
         
     });
+    
     // This creates a font that is 'monospaced', (each character is the same width). This font is later used for the download progress label, since that label is rapidly updated, monospacing the font makes it readable.
     UIFont *systemFont = [UIFont systemFontOfSize:17];
     UIFontDescriptor *monospacedNumberFontDescriptor = [systemFont.fontDescriptor fontDescriptorByAddingAttributes: @{UIFontDescriptorFeatureSettingsAttribute: @[@{UIFontFeatureTypeIdentifierKey: @6, UIFontFeatureSelectorIdentifierKey: @0}]}];
     _monospacedNumberSystemFont = [UIFont fontWithDescriptor:monospacedNumberFontDescriptor size:0];
-    NSArray *successionFolderContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/var/mobile/Media/Succession/" error:nil];
+    
     // Check to see if the user has provided their own IPSW, and if so, offer to extract it instead of downloading one
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[_successionPrefs objectForKey:@"custom_ipsw_path"]]) {
-        UIAlertController *ipswDetected = [UIAlertController alertControllerWithTitle:@"IPSW file detected!" message:[NSString stringWithFormat:@"You can either use the IPSW file you provided at %@ or you can download a clean one.", [_successionPrefs objectForKey:@"custom_ipsw_path"]] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *useProvidedIPSW = [UIAlertAction actionWithTitle:@"Use provided IPSW" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            // If the user taps 'Use provided IPSW, this code is run. I do not understand why 'weakself' is necessary, I believe uroboro suggested I use it because of some memory issue(?) Anyways...
-            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            
-            dispatch_async(queue, ^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[self unzipActivityIndicator] setHidden:FALSE];
-                    self.activityLabel.text = @"Unzipping...";
-                    [self->_startDownloadButton setEnabled:FALSE];
-                    [self->_startDownloadButton setTitle:@"Working, please do not leave the app..." forState:UIControlStateNormal];
-                    [self->_startDownloadButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-                });
-                if (kCFCoreFoundationVersionNumber < 1300) {
-                    self->_needsDecryption = TRUE;
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/dmg"]) {
-                        // Before we continue, let's make sure there's a key available for the device we're looking for.
-                        NSString *rootfsKey = [self getRFSKey];
-                        if (![rootfsKey isEqualToString:@"Failed."]){
-                            [self postDownload];
-                        }
-                    } else {
-                        UIAlertController *needsXPwn = [UIAlertController alertControllerWithTitle:@"Succession requires additional components to be installed" message:@"Please install xpwn from the saurik/Telesphoreo repo." preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *exitAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                            exit(0);
-                        }];
-                        [needsXPwn addAction:exitAction];
-                        [self presentViewController:needsXPwn animated:TRUE completion:nil];
-                    }
-                } else {
-                    self->_needsDecryption = FALSE;
-                    [self postDownload];
-                }
-            });
-        }];
+    if ([[self->_divisePrefs objectForKey:@"found_local_ipsw"] isEqual:@(1)]) {
         
-        UIAlertAction *downloadNewIPSW = [UIAlertAction actionWithTitle:@"Download a clean IPSW" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            // Sets up UI for downloading and executes the code under -(void)startDownload. The "self->" is there to shut up an Xcode warning, if Xcode warns you about this in your project, you should probably add it.
             [self->_startDownloadButton setEnabled:FALSE];
-            [self->_startDownloadButton setTitle:@"Working, please do not leave the app..." forState:UIControlStateNormal];
-            [[UIApplication sharedApplication] setIdleTimerDisabled:TRUE];
-            [self->_startDownloadButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-            [self startDownload];
-        }];
-        [ipswDetected addAction:useProvidedIPSW];
-        [ipswDetected addAction:downloadNewIPSW];
-        [self presentViewController:ipswDetected animated:TRUE completion:nil];
-    } else {
-        for (NSString *file in successionFolderContents) {
-            if ([file containsString:@".ipsw"]) {
-                UIAlertController *possibleIPSWMatchAlert = [UIAlertController alertControllerWithTitle:@"IPSW File Detected" message:[NSString stringWithFormat:@"I found an IPSW file, %@, would you like to move this IPSW to %@ and use it to restore?", file, [_successionPrefs objectForKey:@"custom_ipsw_path"]] preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *moveIPSW = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Use %@", file] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    NSString *successionFolder = @"/var/mobile/Media/Succession/";
-                    [[NSFileManager defaultManager] moveItemAtPath:[successionFolder stringByAppendingPathComponent:file] toPath:[self->_successionPrefs objectForKey:@"custom_ipsw_path"] error:nil];
-                    [[self navigationController] popToRootViewControllerAnimated:TRUE];
-                }];
-                UIAlertAction *downloadIPSW = [UIAlertAction actionWithTitle:@"Download IPSW from Apple" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    // Sets up UI for downloading and executes the code under -(void)startDownload. The "self->" is there to shut up an Xcode warning, if Xcode warns you about this in your project, you should probably add it.
-                    [self->_startDownloadButton setEnabled:FALSE];
-                    [self->_startDownloadButton setTitle:@"Working, please do not leave the app..." forState:UIControlStateNormal];
-                    [[UIApplication sharedApplication] setIdleTimerDisabled:TRUE];
-                    [self->_startDownloadButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-                    [self prepareDownload];
-                }];
-                [possibleIPSWMatchAlert addAction:moveIPSW];
-                [possibleIPSWMatchAlert addAction:downloadIPSW];
-                [self presentViewController:possibleIPSWMatchAlert animated:TRUE completion:nil];
-            }
+            [self->_startDownloadButton setHidden:TRUE];
+            
+            [self->_unzipButton setEnabled:TRUE];
+            [self->_unzipButton setHidden:FALSE];
+            
         }
     }
-}
+
 - (IBAction)backButtonAction:(id)sender {
     // Go back to the home page
-    [[self navigationController] popToRootViewControllerAnimated:TRUE];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)unzipLocalIPSW:(UIButton *)sender {
+    
+    // Need to warn user about the app crashing, need to look into why at some point
+    
+    UIAlertController *crashWarn = [UIAlertController alertControllerWithTitle:@"Warning: Divise will crash after extracting the local IPSW" message:@"Relaunch the app, after the crash, to continue the dualboot/tethered downgrade process.\nPress OK to continue" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *useDefualtPathAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self->_unzipButton setEnabled:FALSE];
+        [self->_unzipButton setBackgroundColor:[UIColor darkGrayColor]];
+        [self->_unzipButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+        
+        [UIApplication sharedApplication].idleTimerDisabled = YES; // Make sure the device doesn't sleep while we are extracting the local IPSW
+        
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_async(queue, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[self unzipActivityIndicator] setHidden:FALSE];
+                self.activityLabel.text = @"Unzipping...";
+                [self->_startDownloadButton setEnabled:FALSE];
+                [self->_startDownloadButton setTitle:@"Working, please do not leave the app..." forState:UIControlStateNormal];
+                [self->_startDownloadButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            });
+            if (kCFCoreFoundationVersionNumber < 1300) {
+                self->_needsDecryption = TRUE;
+                if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/bin/dmg"]) {
+                    // Before we continue, let's make sure there's a key available for the device we're looking for.
+                    NSString *rootfsKey = [self getRFSKey];
+                    if (![rootfsKey isEqualToString:@"Failed."]){
+                        [self postDownload];
+                    }
+                } else {
+                    UIAlertController *needsXPwn = [UIAlertController alertControllerWithTitle:@"Succession requires additional components to be installed" message:@"Please install xpwn from the saurik/Telesphoreo repo." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *exitAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        exit(0);
+                    }];
+                    [needsXPwn addAction:exitAction];
+                    [self presentViewController:needsXPwn animated:TRUE completion:nil];
+                }
+            } else {
+                self->_needsDecryption = FALSE;
+                [self postDownload];
+            }
+        });
+        
+    }];
+    [crashWarn addAction:useDefualtPathAction];
+    [self presentViewController:crashWarn animated:TRUE completion:nil];
+
+    
+}
 - (IBAction)startDownloadButtonAction:(id)sender {
     // Set Up UI and run code under -(void)startDownload
     [_startDownloadButton setEnabled:FALSE];
     [_startDownloadButton setTitle:@"Working, please do not leave the app..." forState:UIControlStateNormal];
     [[UIApplication sharedApplication] setIdleTimerDisabled:TRUE];
-    [_startDownloadButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [_startDownloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _startDownloadButton.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.75f];
     [self prepareDownload];
 }
 
@@ -140,7 +170,7 @@
                 [self startDownload];
             }
         } else {
-            UIAlertController *needsXPwn = [UIAlertController alertControllerWithTitle:@"Succession requires additional components to be installed" message:@"Please install xpwn from the saurik/Telesphoreo repo." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *needsXPwn = [UIAlertController alertControllerWithTitle:@"Divisé requires additional components to be installed" message:@"Please install xpwn from the saurik/Telesphoreo repo." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *exitAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                 exit(0);
             }];
@@ -155,13 +185,13 @@
 
 -(void)startDownload {
     
-    // Removes all files in /var/mobile/Media/Succession to delete any mess from previous uses
-    NSString *workingDir = @"/var/mobile/Media/Succession/";
+    // Removes all files in /var/mobile/Media/Divise to delete any mess from previous uses
+    NSString *workingDir = @"/var/mobile/Media/Divise/";
     NSArray *itemsToDelete = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:workingDir error:nil];
     for (NSString *item in itemsToDelete) {
         [[NSFileManager defaultManager] removeItemAtPath:[workingDir stringByAppendingString:item] error:nil];
     }
-    // Deletes partial downloads in Succession's sandbox folder
+    // Deletes partial downloads in Divise's sandbox folder
     NSString *tmpDir = NSTemporaryDirectory();
     NSArray *tmpToDelete = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:tmpDir error:nil];
     for (NSString *item in tmpToDelete) {
@@ -169,8 +199,8 @@
             [[NSFileManager defaultManager] removeItemAtPath:[tmpDir stringByAppendingString:item] error:nil];
         }
     }
-    // Creates /var/mobile/Media/Succession in case dpkg didn't do so, or if the user deleted it
-    [[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/Media/Succession/" withIntermediateDirectories:TRUE attributes:nil error:nil];
+    // Creates /var/mobile/Media/Divise in case dpkg didn't do so, or if the user deleted it
+    [[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/Media/Divise/" withIntermediateDirectories:TRUE attributes:nil error:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.activityLabel.text = @"Finding IPSW...";
     });
@@ -206,6 +236,9 @@
         
         // Here I need a popup that asks for the desiered iOS version, then passes that into the ipswAPIURLString as deviceBuild
         // Kindy dodgy as it asks for a iOS version number (e.g 13.2.2) instead of a build number, but ispw.me's api works fine with either so *shrug*
+        
+        //_startDownloadButton.backgroundColor = [UIColor clearColor];
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter an iOS version" message:@"e.g '13.2.1'" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.placeholder = @"Enter an iOS version";
@@ -214,92 +247,86 @@
         }];
         UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSLog(@"Downloading iOS version: %@", [[alertController textFields][0] text]);
-            // need to check sep compatibility somehow, maybe host a file on my forked repo with info
-            NSURL * sepCompatURL = [NSURL URLWithString:@"https://matthewpierson.github.io/sep.plist"];
-            NSLog(@"Getting SEP compatibility plist...");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[self activityLabel] setText:@"Getting SEP compatibility plist..."];
-            });
-            NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-            // set the timeout for the download request to 200 minutes (12000 seconds), that should be enough time, eh?
-            sessionConfig.timeoutIntervalForRequest = 12000.0;
-            sessionConfig.timeoutIntervalForResource = 12000.0;
-            // define a download task with the custom timeout and download link
-            NSURLSessionDownloadTask *getSEPTask = [[NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:sepCompatURL];
+            if ([[self->_divisePrefs objectForKey:@"dualboot"] isEqual:@(1)]) {
+                // No need to save this to disk if we aren't dualbooting :)
+                [self->_dualbootPrefs setObject:[[alertController textFields][0] text] forKey:@"Version"];
+                [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.moski.dualboot.plist" error:nil];
+                [self->_dualbootPrefs writeToFile:@"/var/mobile/Library/Preferences/com.moski.dualboot.plist" atomically:TRUE];
+            }
+            [self logToFile:@"Making sure user is aware of SEP stuff" atLineNumber:__LINE__];
             
-            [getSEPTask resume];
-            
-            NSArray *unsupportedDevices = @[@"iPad11,3", @"iPad11,4", @"iPad11,1", @"iPad11,2", @"iPhone11,8", @"iPhone11,2", @"iPhone11,4", @"iPhone11,6", @"iPhone12,1", @"iPhone12,3", @"iPhone12,5"]; // Note that this is only unsupported 64 bit devices, I'm way to lazy to add 32 bit devices
-            NSArray *semisupportedDevices = @[@"iPhone8,2", @"iPhone7,1", @"iPhone8,4"]; // These devices have no 11.x/12.x keys on theiphonewiki so we won't be able to boot them, but will give user choice to continue
-            
-            BOOL *supportedDeviceCheck = [unsupportedDevices containsObject:(self->deviceModel)];
-            BOOL *semisupportedDeviceCheck = [semisupportedDevices containsObject:(self->deviceModel)];
-            if (supportedDeviceCheck){
-                NSLog(@"Device is not supported by Checkm8 currently, erroring");
-                NSString *devicemodelerror = [NSString stringWithFormat:@"Your %@ is not compatible right now sorry", self->deviceModel];
-                UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:devicemodelerror message:@"Press OK to return to the main screen" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }];
-                [alertController2 addAction:confirmAction];
-                [self presentViewController:alertController2 animated:YES completion:nil];
-            } else {
-                NSLog(@"Device is supported by Checkm8!");
-                if (semisupportedDeviceCheck){
-                    NSString *devicemodelerror = [NSString stringWithFormat:@"Your %@ has no 11.x/12.x keys on theiphonewiki, so you won't be able to tether boot", self->deviceModel];
-                    UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:devicemodelerror message:@"Press OK to continue if you are aware of this or close the app" preferredStyle:UIAlertControllerStyleAlert];
+            NSString *title = [NSString stringWithFormat:@"Have you checked SEP compatibility?"];
+            UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:title message:@"Please verify that you have checked SEP compatibility with your current iOS and the version you wish to restore" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                NSArray *unsupportedDevices = @[@"iPad8,9", @"iPad8,10", @"iPad8,11", @"iPad8,12", @"iPad11,3", @"iPad11,4", @"iPad11,1", @"iPad11,2", @"iPhone11,8", @"iPhone11,2", @"iPhone11,4", @"iPhone11,6", @"iPhone12,1", @"iPhone12,3", @"iPhone12,5", @"iPhone12,8"]; // Note that this is only unsupported 64 bit devices, I'm way to lazy to add 32 bit devices
+                
+                BOOL *supportedDeviceCheck = [unsupportedDevices containsObject:(self->deviceModel)];
+                if (supportedDeviceCheck){
+                    NSLog(@"Device is not supported by Checkm8 currently, erroring");
+                    NSString *devicemodelerror = [NSString stringWithFormat:@"Your %@ is not compatible right now sorry", self->deviceModel];
+                    UIAlertController *alertController2 = [UIAlertController alertControllerWithTitle:devicemodelerror message:@"Press OK to return to the main screen" preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [self logToFile:[NSString stringWithFormat:@"User chose to continue downgrade even though they won't be able to boot =) I warned them at least"] atLineNumber:__LINE__];
+                        [self dismissViewControllerAnimated:YES completion:nil];
                     }];
                     [alertController2 addAction:confirmAction];
                     [self presentViewController:alertController2 animated:YES completion:nil];
-                }
-                self->deviceBuild = [[alertController textFields][0] text];
-                NSString *ipswAPIURLString = [NSString stringWithFormat:@"https://api.ipsw.me/v2/%@/%@/url/", self->deviceModel, self->deviceBuild];
-                       // to use the API mentioned above, I create a string that incorporates the iOS buildnumber and device model, then it is converted into an NSURL...
-                NSURL *ipswAPIURL = [NSURL URLWithString:ipswAPIURLString];
-                       // and after a little UI config...
-                NSLog(@"Downloading IPSW from : %@", ipswAPIURL);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[self downloadProgressBar] setHidden:FALSE];
-                });
-                       
-                       // the request is made, and the string received from ipsw.me is passed to an NSData object called 'data' in the completion handler. Note that the request is created below, but it is not actually run until [getDownloadLinkTask resume];
-                    NSURLSessionDataTask *getDownloadLinkTask = [[NSURLSession sharedSession] dataTaskWithURL:ipswAPIURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                           // so now we have a direct link to where apple is hosting the IPSW for the user's device/firmware, but it's in a rather useless NSData object, so let's convet that to an NSString
-                    NSString * downloadLinkString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                           // update the UI, but unless the user has a really really slow device, they probably won't ever see this:
+                } else {
+                    NSLog(@"Device is supported by Checkm8!");
+                    self->deviceBuild = [[alertController textFields][0] text];
+                    NSString *ipswAPIURLString = [NSString stringWithFormat:@"https://api.ipsw.me/v2/%@/%@/url/", self->deviceModel, self->deviceBuild];
+                           // to use the API mentioned above, I create a string that incorporates the iOS buildnumber and device model, then it is converted into an NSURL...
+                    NSURL *ipswAPIURL = [NSURL URLWithString:ipswAPIURLString];
+                           // and after a little UI config...
+                    NSLog(@"Downloading IPSW from : %@", ipswAPIURL);
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[self activityLabel] setText:[NSString stringWithFormat:@"Found IPSW at %@", downloadLinkString]];
+                        [[self downloadProgressBar] setHidden:FALSE];
                     });
-                           // now we reference _downloadLink, created in DownloadViewController.h, and set it equal to the NSURL version of the string we received from ipsw.me
-                    self->_downloadLink = [NSURL URLWithString:downloadLinkString];
-                    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-                           // set the timeout for the download request to 200 minutes (12000 seconds), that should be enough time, eh?
-                    sessionConfig.timeoutIntervalForRequest = 12000.0;
-                    sessionConfig.timeoutIntervalForResource = 12000.0;
-                           // define a download task with the custom timeout and download link
-                    NSURLSessionDownloadTask *task = [[NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:self->_downloadLink];
-                           // start the ipsw download task. NSURLSessionDownloadTasks call
-                           //
-                           // "-(void) URLSession:(NSURLSession *)session downloadTask:(nonnull NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite"
-                           //
-                           // frequently throughout the download process, which is where my code for updating the UI is. They also call
-                           //
-                           // - (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
-                           //
-                           // when finished, which is where I have my code for what to do once the download is finished
-                    NSLog(@"SUCCESSIONTESTING: STARTED!");
-                    [task resume];
-                }];
-                [getDownloadLinkTask resume];
-            }
+                           
+                           // the request is made, and the string received from ipsw.me is passed to an NSData object called 'data' in the completion handler. Note that the request is created below, but it is not actually run until [getDownloadLinkTask resume];
+                        NSURLSessionDataTask *getDownloadLinkTask = [[NSURLSession sharedSession] dataTaskWithURL:ipswAPIURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                               // so now we have a direct link to where apple is hosting the IPSW for the user's device/firmware, but it's in a rather useless NSData object, so let's convet that to an NSString
+                        NSString * downloadLinkString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                               // update the UI, but unless the user has a really really slow device, they probably won't ever see this:
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[self activityLabel] setText:[NSString stringWithFormat:@"Found IPSW at %@", downloadLinkString]];
+                        });
+                               // now we reference _downloadLink, created in DownloadViewController.h, and set it equal to the NSURL version of the string we received from ipsw.me
+                        self->_downloadLink = [NSURL URLWithString:downloadLinkString];
+                        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+                               // set the timeout for the download request to 200 minutes (12000 seconds), that should be enough time, eh?
+                        sessionConfig.timeoutIntervalForRequest = 12000.0;
+                        sessionConfig.timeoutIntervalForResource = 12000.0;
+                               // define a download task with the custom timeout and download link
+                        NSURLSessionDownloadTask *task = [[NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]] downloadTaskWithURL:self->_downloadLink];
+                               // start the ipsw download task. NSURLSessionDownloadTasks call
+                               //
+                               // "-(void) URLSession:(NSURLSession *)session downloadTask:(nonnull NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite"
+                               //
+                               // frequently throughout the download process, which is where my code for updating the UI is. They also call
+                               //
+                               // - (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
+                               //
+                               // when finished, which is where I have my code for what to do once the download is finished
+                        NSLog(@"DIVISETESTING: STARTED!");
+                        [task resume];
+                    }];
+                    [getDownloadLinkTask resume];
+                }
+            }];
+            [alertController2 addAction:confirmAction];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                exit(0);
+            }];
+            [alertController2 addAction:cancel];
+            [self presentViewController:alertController2 animated:YES completion:nil];
         
 
         }];
         [alertController addAction:confirmAction];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             NSLog(@"Canelled");
+            [self dismissViewControllerAnimated:YES completion:nil];
         }];
         [alertController addAction:cancelAction];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -372,7 +399,7 @@
         } else {
             // oof. key isnt available. :rip:
             [self logToFile:[NSString stringWithFormat:@"Key for %@ %@ not available.", deviceModel, deviceBuild] atLineNumber:__LINE__];
-            UIAlertController *deviceNotSupported = [UIAlertController alertControllerWithTitle:@"Device not supported." message:@"The filesystem for your iOS version is encrypted, and a decryption key is not publicly available. If you are a researcher with a private key, please decrypt the DMG yourself using xpwn and place it in /var/mobile/Media/Succession/rfs.dmg (oh, and could you also pretty please post it to theiphonewiki)." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *deviceNotSupported = [UIAlertController alertControllerWithTitle:@"Device not supported." message:@"The filesystem for your iOS version is encrypted, and a decryption key is not publicly available. If you are a researcher with a private key, please decrypt the DMG yourself using xpwn and place it in /var/mobile/Media/Divise/rfs.dmg (oh, and could you also pretty please post it to theiphonewiki)." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *exitAction = [UIAlertAction actionWithTitle:@"Exit" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                 exit(0);
             }];
@@ -552,7 +579,7 @@
         });
         NSError * error;
         // NSFileManager lets us do pretty much anything with files, and also, if there's an error, error information will be stored in the NSError object I created above.
-        [[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:[_successionPrefs objectForKey:@"custom_ipsw_path"] error:&error];
+        [[NSFileManager defaultManager] moveItemAtPath:[location path] toPath:[_divisePrefs objectForKey:@"custom_ipsw_path"] error:&error];
         // I've never come across an error with this, but it's better to have error handling than to... not. Assuming there's no error, continue on to -(void)postDownload
         if (error != nil) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -565,20 +592,21 @@
 }
 
 - (void) postDownload {
+    [self logToFile:@"Started PostDownload" atLineNumber:__LINE__];
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self unzipActivityIndicator] setHidden:FALSE];
         [[self activityLabel] setText:@"Verifying IPSW..."];
         
     });
-    [[NSFileManager defaultManager] moveItemAtPath:[_successionPrefs objectForKey:@"custom_ipsw_path"] toPath:@"/var/mobile/Media/Succession/ipsw.ipsw" error:nil];
-    OZZipFile *zip= [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Succession/ipsw.ipsw" mode:OZZipFileModeUnzip];
+    //[[NSFileManager defaultManager] moveItemAtPath:[_divisePrefs objectForKey:@"custom_ipsw_path"] toPath:@"/var/mobile/Media/Divise/ipsw.ipsw" error:nil];
+    OZZipFile *zip= [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Divise/ipsw.ipsw" mode:OZZipFileModeUnzip];
     NSMutableData *buffer = [[NSMutableData alloc] initWithLength:1024];
     NSArray *zipContentList= [zip listFileInZipInfos];
     for (OZFileInZipInfo *fileInZipInfo in zipContentList) {
         if ([[fileInZipInfo name] isEqualToString:@"BuildManifest.plist"]) {
             // Create file
             [[self activityLabel] setText:@"Extracting RootFS...\nThis may take a while!"];
-            NSString *filePath = [NSString stringWithFormat:@"/var/mobile/Media/Succession/%@", fileInZipInfo.name];
+            NSString *filePath = [NSString stringWithFormat:@"/var/mobile/Media/Divise/%@", fileInZipInfo.name];
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:[NSData data] attributes:nil];
             NSFileHandle *file= [NSFileHandle fileHandleForWritingAtPath:filePath];
             [zip locateFileInZip:fileInZipInfo.name];
@@ -601,7 +629,7 @@
         }
     }
     [zip close];
-    NSDictionary *IPSWBuildManifest = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Media/Succession/BuildManifest.plist"];
+    NSDictionary *IPSWBuildManifest = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Media/Divise/BuildManifest.plist"];
     if ([[IPSWBuildManifest objectForKey:@"ProductBuildVersion"] isEqualToString:deviceBuild]) {
         [self logToFile:[NSString stringWithFormat:@"Build number in BuildManifest %@ matches deviceBuild %@", [IPSWBuildManifest objectForKey:@"ProductBuildVersion"], deviceBuild] atLineNumber:__LINE__];
         if ([[IPSWBuildManifest objectForKey:@"SupportedProductTypes"] containsObject:deviceModel]) {
@@ -625,9 +653,9 @@
     });
     OZZipFile *unzipIPSW;
     if (sizeof(void *) == 4) {
-        unzipIPSW = [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Succession/ipsw.ipsw" mode:OZZipFileModeUnzip legacy32BitMode:TRUE];
+        unzipIPSW = [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Divise/ipsw.ipsw" mode:OZZipFileModeUnzip legacy32BitMode:TRUE];
     } else {
-        unzipIPSW = [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Succession/ipsw.ipsw" mode:OZZipFileModeUnzip legacy32BitMode:TRUE];
+        unzipIPSW = [[OZZipFile alloc] initWithFileName:@"/var/mobile/Media/Divise/ipsw.ipsw" mode:OZZipFileModeUnzip legacy32BitMode:TRUE];
     }
     [unzipIPSW locateFileInZip:@"BuildManifest.plist"];
     NSMutableDictionary *namesAndSizes = [[NSMutableDictionary alloc] init];
@@ -650,7 +678,7 @@
     float dmgLength = (float)dmgLengthULL;
     OZZipReadStream *read = [unzipIPSW readCurrentFileInZip];
     NSMutableData *data = [[NSMutableData alloc] initWithLength:32768];
-    [[NSFileManager defaultManager] createFileAtPath:@"/var/mobile/Media/Succession/rfs.dmg" contents:nil attributes:nil];
+    [[NSFileManager defaultManager] createFileAtPath:@"/var/mobile/Media/Divise/rfs.dmg" contents:nil attributes:nil];
     float unzipProgress = 0;
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self unzipActivityIndicator] setHidden:TRUE];
@@ -672,7 +700,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self downloadProgressBar] setProgress:(unzipProgress/dmgLength)];
         });
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:@"/var/mobile/Media/Succession/rfs.dmg"];
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:@"/var/mobile/Media/Divise/rfs.dmg"];
         [fileHandle seekToEndOfFile];
         [fileHandle writeData:data];
         [fileHandle closeFile];
@@ -687,21 +715,21 @@
         [[self activityLabel] setText:[NSString stringWithFormat:@"Cleaning up..."]];
     });
     // Delete everything else
-    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Media/Succession/ipsw.ipsw" error:nil];
-    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Media/Succession/BuildManifest.plist" error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Media/Divise/ipsw.ipsw" error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Media/Divise/BuildManifest.plist" error:nil];
     [self logToFile:@"extraction complete" atLineNumber:__LINE__];
     // If the DMG needs decryption, decrypt it now.
     // Let the user know that download is now complete
     NSString *message;
     if (_needsDecryption) {
-        [[NSFileManager defaultManager] moveItemAtPath:@"/var/mobile/Media/Succession/rfs.dmg" toPath:@"/var/mobile/Media/Succession/encrypted.dmg" error:nil];
+        [[NSFileManager defaultManager] moveItemAtPath:@"/var/mobile/Media/Divise/rfs.dmg" toPath:@"/var/mobile/Media/Divise/encrypted.dmg" error:nil];
         message = @"The rootfilesystem was successfully extracted, but it needs to be decrypted. Please go back to the home page and tap \"Decrypt DMG\"";
     } else {
-        message = @"The rootfilesystem was successfully extracted to /var/mobile/Media/Succession/rfs.dmg";
+        message = @"The rootfilesystem was successfully extracted to /var/mobile/Media/Succession/rfs.dmg\nIf the app hangs here just close it in app switcher and reopen";
     }
-    UIAlertController *downloadComplete = [UIAlertController alertControllerWithTitle:@"Download Complete" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *downloadComplete = [UIAlertController alertControllerWithTitle:@"Download/Extraction Complete" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *backToHomePage = [UIAlertAction actionWithTitle:@"Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[self navigationController] popToRootViewControllerAnimated:TRUE];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [downloadComplete addAction:backToHomePage];
     [self presentViewController:downloadComplete animated:TRUE completion:nil];
@@ -723,14 +751,14 @@
 }
 
 - (void)logToFile:(NSString *)message atLineNumber:(int)lineNum {
-    if ([[self->_successionPrefs objectForKey:@"log-file"] isEqual:@(1)]) {
+    if ([[self->_divisePrefs objectForKey:@"log-file"] isEqual:@(1)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (![[NSFileManager defaultManager] fileExistsAtPath:@"/private/var/mobile/succession.log"]) {
-                [[NSFileManager defaultManager] createFileAtPath:@"/private/var/mobile/succession.log" contents:nil attributes:nil];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:@"/private/var/mobile/Divise.log"]) {
+                [[NSFileManager defaultManager] createFileAtPath:@"/private/var/mobile/Divise.log" contents:nil attributes:nil];
             }
-            NSString *stringToLog = [NSString stringWithFormat:@"[SUCCESSIONLOG %@: %@] Line %@: %@\n", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [NSDate date], [NSString stringWithFormat:@"%d", lineNum], message];
+            NSString *stringToLog = [NSString stringWithFormat:@"[DIVISELOG %@: %@] Line %@: %@\n", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [NSDate date], [NSString stringWithFormat:@"%d", lineNum], message];
             NSLog(@"%@", stringToLog);
-            NSFileHandle *logFileHandle = [NSFileHandle fileHandleForWritingAtPath:@"/private/var/mobile/succession.log"];
+            NSFileHandle *logFileHandle = [NSFileHandle fileHandleForWritingAtPath:@"/private/var/mobile/Divise.log"];
             [logFileHandle seekToEndOfFile];
             [logFileHandle writeData:[stringToLog dataUsingEncoding:NSUTF8StringEncoding]];
             [logFileHandle closeFile];

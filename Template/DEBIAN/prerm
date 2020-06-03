@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ "$1" != "upgrade" ]; then
-    rm -rf /private/var/mobile/Media/Succession/
-    rm -rf /Applications/SuccessionDown.app/hdik
-    rm -rf /Applications/SuccessionDown.app/attach
+    rm -rf /private/var/mobile/Media/Divise/
+    rm -rf /Applications/Divisé.app/hdik
+    rm -rf /Applications/Divisé.app/attach
+    umount -f /private/var/mnt/divise/
+    rm -rf /private/var/mnt/divise/
 fi
