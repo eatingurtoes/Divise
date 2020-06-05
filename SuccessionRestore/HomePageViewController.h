@@ -36,4 +36,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *donateButton;
 @property (weak, nonatomic) IBOutlet UIButton *ContactButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @end

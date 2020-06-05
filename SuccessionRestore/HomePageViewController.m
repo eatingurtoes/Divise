@@ -74,6 +74,7 @@
     _iOSVersionLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.75f];
     _iOSBuildLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.75f];
     _titleLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.75f];
+    
     //Gets iOS version and changes label.
     _deviceVersion = [[UIDevice currentDevice] systemVersion];
     self.iOSVersionLabel.text = [NSString stringWithFormat:@"%@", _deviceVersion];

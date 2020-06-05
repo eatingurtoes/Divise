@@ -22,6 +22,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6z-s8-hAS">
                                 <rect key="frame" x="135" y="518" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Goes back to the homepage" label="Back button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="GHL-Yl-NG6"/>
                                 </constraints>
@@ -73,7 +74,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kd-Hd-SKK">
-                                <rect key="frame" x="37.5" y="150" width="245" height="30"/>
+                                <rect key="frame" x="37.5" y="160" width="245" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="245" id="KGE-mZ-wHi"/>
@@ -92,7 +93,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMm-V3-uYf">
-                                <rect key="frame" x="32.5" y="190" width="255" height="30"/>
+                                <rect key="frame" x="32.5" y="210" width="255" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="255" id="Gg9-Eb-scC"/>
@@ -111,7 +112,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaJ-nJ-DTT">
-                                <rect key="frame" x="45" y="230" width="230" height="30"/>
+                                <rect key="frame" x="45" y="260" width="230" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="9RE-Va-GWd"/>
@@ -130,7 +131,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dnu-Rw-3lJ">
-                                <rect key="frame" x="47.5" y="270" width="225" height="30"/>
+                                <rect key="frame" x="47.5" y="310" width="225" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="7bj-8D-OcS"/>
@@ -154,10 +155,10 @@
                             <constraint firstItem="eaJ-nJ-DTT" firstAttribute="centerX" secondItem="Vqw-aO-VOh" secondAttribute="centerX" id="434-Ko-Vfe"/>
                             <constraint firstItem="N6z-s8-hAS" firstAttribute="centerX" secondItem="Vqw-aO-VOh" secondAttribute="centerX" id="Aco-r0-WRZ"/>
                             <constraint firstItem="ldT-y0-8tc" firstAttribute="centerX" secondItem="Vqw-aO-VOh" secondAttribute="centerX" id="BRm-co-uJg"/>
-                            <constraint firstItem="eaJ-nJ-DTT" firstAttribute="top" secondItem="cMm-V3-uYf" secondAttribute="bottom" constant="10" id="Cta-Wt-uzT"/>
-                            <constraint firstItem="cMm-V3-uYf" firstAttribute="top" secondItem="2kd-Hd-SKK" secondAttribute="bottom" constant="10" id="QUO-Xp-llO"/>
-                            <constraint firstItem="Dnu-Rw-3lJ" firstAttribute="top" secondItem="eaJ-nJ-DTT" secondAttribute="bottom" constant="10" id="VVj-7u-xUs"/>
-                            <constraint firstItem="2kd-Hd-SKK" firstAttribute="top" secondItem="Myd-Mc-JHP" secondAttribute="bottom" constant="10" id="ZmY-7T-LW3"/>
+                            <constraint firstItem="eaJ-nJ-DTT" firstAttribute="top" secondItem="cMm-V3-uYf" secondAttribute="bottom" constant="20" id="Cta-Wt-uzT"/>
+                            <constraint firstItem="cMm-V3-uYf" firstAttribute="top" secondItem="2kd-Hd-SKK" secondAttribute="bottom" constant="20" id="QUO-Xp-llO"/>
+                            <constraint firstItem="Dnu-Rw-3lJ" firstAttribute="top" secondItem="eaJ-nJ-DTT" secondAttribute="bottom" constant="20" id="VVj-7u-xUs"/>
+                            <constraint firstItem="2kd-Hd-SKK" firstAttribute="top" secondItem="Myd-Mc-JHP" secondAttribute="bottom" constant="20" id="ZmY-7T-LW3"/>
                             <constraint firstItem="Myd-Mc-JHP" firstAttribute="centerX" secondItem="Vqw-aO-VOh" secondAttribute="centerX" id="eIo-br-mHe"/>
                             <constraint firstItem="Myd-Mc-JHP" firstAttribute="top" secondItem="ldT-y0-8tc" secondAttribute="bottom" constant="50" id="gOz-eU-CaU"/>
                             <constraint firstItem="cMm-V3-uYf" firstAttribute="centerX" secondItem="Vqw-aO-VOh" secondAttribute="centerX" id="ioK-8t-XRl"/>
@@ -191,6 +192,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oam-hf-R66">
                                 <rect key="frame" x="72.5" y="100" width="175" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Wipe the second OS's data partition button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="FAM-AC-zEc"/>
                                     <constraint firstAttribute="width" constant="175" id="pk1-7E-Vcv"/>
@@ -210,6 +212,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KcB-am-Uyw">
                                 <rect key="frame" x="72.5" y="50" width="175" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.15770537009999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Uninstall the second OS button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="YDg-2L-6lT"/>
                                     <constraint firstAttribute="width" constant="175" id="gTO-oD-1iF"/>
@@ -229,6 +232,7 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7e3-Ag-xTD">
                                 <rect key="frame" x="35" y="150" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Mount the second OS button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="khD-TT-WC0"/>
                                 </constraints>
@@ -247,6 +251,7 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfL-nE-5rG">
                                 <rect key="frame" x="35" y="150" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Unmount the second OS button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="U8F-l8-Yqq"/>
                                     <constraint firstAttribute="height" constant="30" id="Zob-q0-tWd"/>
@@ -266,6 +271,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2im-BQ-3xv">
                                 <rect key="frame" x="40" y="200" width="240" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Delete the downloaded rootfs.dmg button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="RCK-Pr-F6h"/>
                                     <constraint firstAttribute="height" constant="30" id="ZAM-nm-ZfX"/>
@@ -294,6 +300,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoQ-wb-eqB">
                                 <rect key="frame" x="135" y="518" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Go back to the homepage" label="Back button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="qBb-9D-sWO"/>
                                 </constraints>
@@ -378,6 +385,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSR-tn-iUQ">
                                 <rect key="frame" x="61" y="92" width="55" height="25"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open donation page in safari" label="Donate Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="YVu-Nl-0lE"/>
                                     <constraint firstAttribute="width" constant="55" id="lKo-Yn-ETg"/>
@@ -398,6 +406,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0F-S6-ikK">
                                 <rect key="frame" x="200" y="92" width="59" height="25"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Contact moski" label="Contact button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="59" id="aE6-h6-KXQ"/>
                                     <constraint firstAttribute="height" constant="25" id="mea-Yr-kBL"/>
@@ -416,9 +425,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhB-vO-tJs">
-                                <rect key="frame" x="106.5" y="117" width="107" height="24"/>
+                                <rect key="frame" x="106" y="117" width="108.5" height="24"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="107" id="dNr-kD-ZLi"/>
+                                    <constraint firstAttribute="height" constant="24" id="GoB-Yt-PNE"/>
+                                    <constraint firstAttribute="width" constant="108.5" id="VgN-iI-pnO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -431,9 +444,12 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Model" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abp-eL-6Z5">
-                                <rect key="frame" x="10" y="142" width="52.5" height="21"/>
+                                <rect key="frame" x="10" y="142" width="62.5" height="21"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="52.5" id="9uz-mB-chG"/>
+                                    <constraint firstAttribute="width" constant="62.5" id="9uz-mB-chG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -446,9 +462,12 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS Version" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKZ-N3-YkL">
-                                <rect key="frame" x="10" y="168" width="93.5" height="21"/>
+                                <rect key="frame" x="10" y="168" width="103.5" height="21"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="93.5" id="mUO-Ap-1Vh"/>
+                                    <constraint firstAttribute="width" constant="103.5" id="mUO-Ap-1Vh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -461,9 +480,12 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS Build" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ess-Lg-ydl">
-                                <rect key="frame" x="10" y="194" width="74.5" height="21"/>
+                                <rect key="frame" x="10" y="194" width="84.5" height="21"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="74.5" id="u6G-pQ-lQj"/>
+                                    <constraint firstAttribute="width" constant="84.5" id="u6G-pQ-lQj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -476,9 +498,9 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone 9,2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Z8-mG-XV3">
-                                <rect key="frame" x="219" y="142" width="86" height="21"/>
+                                <rect key="frame" x="210" y="142" width="95" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="w1r-DJ-eHl"/>
+                                    <constraint firstAttribute="width" constant="95" id="w1r-DJ-eHl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -491,9 +513,9 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.1.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TU6-oy-6RV">
-                                <rect key="frame" x="257" y="168" width="48" height="21"/>
+                                <rect key="frame" x="245" y="168" width="60" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="jjq-yf-XeW"/>
+                                    <constraint firstAttribute="width" constant="60" id="jjq-yf-XeW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -506,9 +528,9 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14B102" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEO-N4-nGY">
-                                <rect key="frame" x="243" y="194" width="62" height="21"/>
+                                <rect key="frame" x="230" y="194" width="75" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="62" id="CLL-iz-CJd"/>
+                                    <constraint firstAttribute="width" constant="75" id="CLL-iz-CJd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -523,6 +545,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyJ-6j-gtA">
                                 <rect key="frame" x="85" y="468" width="150" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.15770537009999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="open the restore/dualboot page" label="Prepare to restore or dualboot button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="IWc-HI-1M9"/>
                                 </constraints>
@@ -540,6 +563,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Divisé!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4X9-XI-Fwg">
                                 <rect key="frame" x="37" y="30" width="246" height="36"/>
+                                <accessibility key="accessibilityConfiguration" label="Welcome to Divise!"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -552,6 +576,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Codebase by Samg_is_a_Ninja, Modified by Moski" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4EC-dm-fKT">
                                 <rect key="frame" x="10" y="71" width="300" height="16"/>
+                                <accessibility key="accessibilityConfiguration" label="Code base by samg is a ninja, Modified by moski"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -565,6 +590,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lgt-1f-oP7">
                                 <rect key="frame" x="125" y="518" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open the settings page" label="Settings Button"/>
                                 <rect key="contentStretch" x="0.050000000000000003" y="0.0" width="1" height="1"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="6Fq-wo-9rP"/>
@@ -591,6 +617,7 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3s-O3-PD4">
                                 <rect key="frame" x="85" y="468" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open the download page" label="Download IPSW button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="enB-1h-Yqi"/>
                                 </constraints>
@@ -608,6 +635,9 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently Installed iOS Versions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRi-IB-Eoa">
                                 <rect key="frame" x="15" y="263" width="275" height="21.5"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="275" id="BJA-Ht-EZB"/>
                                 </constraints>
@@ -714,6 +744,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eov-qy-ZFi">
                                 <rect key="frame" x="15" y="416.5" width="225" height="34"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open the manage installed versions page" label="Manage Installed Versions Button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="225" id="bYk-fy-Xbg"/>
                                 </constraints>
@@ -732,6 +763,9 @@
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beta Version 0.0.0-beta" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbn-Dt-8aF">
                                 <rect key="frame" x="65" y="211" width="190" height="21"/>
                                 <color key="backgroundColor" red="1" green="0.15770537009999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="190" id="u3P-FN-Tli"/>
                                 </constraints>
@@ -748,6 +782,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXo-Nw-5GY">
                                 <rect key="frame" x="20" y="518" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open the help page" label="Help Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="FTq-jj-0ab"/>
                                     <constraint firstAttribute="width" constant="30" id="pcw-IV-vOV"/>
@@ -843,6 +878,7 @@
                         <outlet property="mainversionLabel" destination="sKZ-N3-YkL" id="6y7-Rr-FFN"/>
                         <outlet property="modelLabel" destination="abp-eL-6Z5" id="Jgc-EJ-an9"/>
                         <outlet property="prepareToRestoreButton" destination="OyJ-6j-gtA" id="O5W-D6-iiI"/>
+                        <outlet property="settingsButton" destination="Lgt-1f-oP7" id="262-FT-kR3"/>
                         <outlet property="titleLabel" destination="rhB-vO-tJs" id="lFT-uH-yC3"/>
                     </connections>
                 </viewController>
@@ -865,6 +901,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AJ-ZM-C16">
                                 <rect key="frame" x="135" y="518" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="goes back to the homepage" label="back button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="ona-D3-au1"/>
                                 </constraints>
@@ -883,6 +920,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q9Q-yY-ZgB">
                                 <rect key="frame" x="102.5" y="60" width="115" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open the special thanks page" label="Special thanks button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="115" id="axp-TT-maa"/>
                                 </constraints>
@@ -901,6 +939,9 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log to &quot;/var/mobile/Divise.log&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffS-WI-o1P">
                                 <rect key="frame" x="15" y="148" width="240" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="JM3-u0-ieN"/>
                                     <constraint firstAttribute="height" constant="30" id="gRI-rR-9nl"/>
@@ -916,10 +957,14 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEu-0m-Xss">
                                 <rect key="frame" x="261" y="147" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" label="Enable/Disable logging "/>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dualboot Device" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCN-7S-tpZ">
                                 <rect key="frame" x="15" y="188" width="140" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="6H8-Bd-Vvn"/>
                                     <constraint firstAttribute="height" constant="30" id="cp9-b5-rHX"/>
@@ -935,10 +980,12 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TAP-8X-mSy">
                                 <rect key="frame" x="261" y="186" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" hint="On for dualbooting or off for tethered downgrading" label="Swap restore modes"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mad-HE-h3d">
                                 <rect key="frame" x="16" y="228" width="260" height="33"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Delete downloaded rootfs.dmg button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="m0u-tc-USf"/>
                                 </constraints>
@@ -967,6 +1014,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBm-ek-WLY">
                                 <rect key="frame" x="16" y="271" width="120" height="33"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open a safari tab with a secret link" label="Secret button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="bg4-21-T7v"/>
                                 </constraints>
@@ -986,6 +1034,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2WE-1u-dJx">
                                 <rect key="frame" x="16" y="314" width="245" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Resets settings/preferences to default and restarts the app" label="Reset all settings/preferences button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="82T-z0-BJy"/>
                                     <constraint firstAttribute="width" constant="245" id="l0C-ce-A3n"/>
@@ -1004,10 +1053,10 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Divise - Version 0.1.5-beta" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuX-Vo-WEy">
-                                <rect key="frame" x="15" y="452" width="240" height="30"/>
+                                <rect key="frame" x="15" y="452" width="180" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="i4f-CF-PgI"/>
-                                    <constraint firstAttribute="width" constant="240" id="l6f-x0-wOj"/>
+                                    <constraint firstAttribute="width" constant="180" id="l6f-x0-wOj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1069,6 +1118,7 @@
                             <rect key="frame" x="0.0" y="99.5" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <accessibility key="accessibilityConfiguration" hint="Goes back to the settings page" label="Back button"/>
                             <state key="normal" title="Back">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -1174,6 +1224,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytb-TS-3sv">
                                 <rect key="frame" x="135" y="518" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Goes back to the homepage" label="Back button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="RFb-gp-sBu"/>
                                     <constraint firstAttribute="height" constant="30" id="UTT-nr-U5w"/>
@@ -1193,6 +1244,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Cc-GK-dNy">
                                 <rect key="frame" x="107.5" y="468" width="105" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.15770537009999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Start the restore/dualboot" label="Restore/dualboot your device button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="9mB-Mf-5HK"/>
                                     <constraint firstAttribute="width" constant="105" id="ua5-rj-Kzc"/>
@@ -1279,6 +1331,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uge-cz-SO4">
                                 <rect key="frame" x="135" y="518" width="50" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Go back to the homepage" label="Back Button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="N8c-H7-YNK"/>
                                 </constraints>
@@ -1336,6 +1389,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sav-SP-fAw">
                                 <rect key="frame" x="25" y="468" width="270" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.35686274509999999" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" hint="Open a text entry section and enter the iOS version you wish to download" label="Enter iOS version button"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="270" id="cat-aE-Flu"/>
                                 </constraints>

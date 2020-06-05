@@ -16,7 +16,7 @@ do
     then
         echo "Divisé has detected arm64e!"
         echo "arm64e is unsupported, deleting Divisé and exiting! (You shouldn't have made it this far!)"
-        #rm -rf /Applications/Divisé.app
+        rm -rf /Applications/Divisé.app
         uicache
         exit
 	fi
