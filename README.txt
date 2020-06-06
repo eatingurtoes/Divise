@@ -1,5 +1,5 @@
-# Divisé
-
+# Divisé Dark
+will update README soon
 ---------
 
 ## W.I.P
