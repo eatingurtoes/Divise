@@ -29,6 +29,7 @@ Compiling is fairly simple afterwards, thanks to the `compile` script provided i
 ***Note**: The install part of the `compile` script will only work if you have OpenSSH installed on your iOS device.*
 
 ## License
-This project is licensed under the GNU General Public License v3.0, with accordance to [rsync](https://rsync.samba.org/) and [Zebra](https://github.com/wstyres/Zebra). If you'd like to support the project or my development, you can donate [here](https://paypal.me/SamGardner4). **Donations are not a requirement, but highly appreciated!**
+This project is licensed under the GNU General Public License v3.0, with accordance to [rsync](https://rsync.samba.org/) and [Zebra](https://github.com/wstyres/Zebra). If you'd like to support the original project or @moski's development, you can donate [here](https://paypal.me/SamGardner4). **Donations are not a requirement, but highly appreciated by @moski**
+**I don't accept donations, but if you like the project check out the original**
 
 Special thanks to [PsychoTea](https://twitter.com/iBSparkes), [Pwn20wnd](https://twitter.com/Pwn20wnd), [Cryptiiic](https://github.com/Cryptiiiic), and [Nobbele](https://github.com/nobbele) for their respective contributions to this project.
